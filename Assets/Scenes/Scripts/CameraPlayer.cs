@@ -22,6 +22,7 @@ public class CameraPlayer : MonoBehaviour
 
     void Start()
     {
+        transform.position = player.transform.position +offset;
         
     }
 
@@ -33,7 +34,7 @@ public class CameraPlayer : MonoBehaviour
         courrentSpeed = speedController.planetRigidbody.position;
         //offset.z = -5-courrentSpeed.y/20;
        // offset.y = -courrentSpeed.y*0.0001f;
-        transform.position = player.transform.position +offset;
+        
 
         if(Input.GetButton("MoveCamera")){
 
