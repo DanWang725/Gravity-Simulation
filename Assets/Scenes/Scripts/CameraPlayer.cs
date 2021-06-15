@@ -39,9 +39,10 @@ public class CameraPlayer : MonoBehaviour
         //offset.z = -5-courrentSpeed.y/20;
        // offset.y = -courrentSpeed.y*0.0001f;
         
-
+        //handling camera rotation when the right mouse button is held down
         if(Input.GetButton("MoveCamera")){
 
+            //doing the initial rotation based on mouse X and Y values
             transform.Rotate(0, Input.GetAxis("Mouse X")*sensitivity,0);
             transform.Rotate(-Input.GetAxis("Mouse Y")*sensitivity,0,0);
 
@@ -53,6 +54,7 @@ public class CameraPlayer : MonoBehaviour
             Camera.main.transform.rotation = Quaternion.Euler(currentRotation.y,currentRotation.x,0);
         }
 
+        //calculating the movement vectors based on movement keys
         float xMovement = Input.GetAxis("Vertical")*movementSensitivity;
         float yMovement = Input.GetAxis("Vertical Y")*movementSensitivity;
         float zMovement = Input.GetAxis("Horizontal")*movementSensitivity;
@@ -61,10 +63,15 @@ public class CameraPlayer : MonoBehaviour
         transform.Translate(Vector3.right * zMovement);
         //transform.position = transform.position + new Vector3(zMovement,yMovement,xMovement);
 
+        //raycast for planet selection
         if ( Input.GetMouseButtonDown (0)){ 
            RaycastHit hit; 
            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
+
+           //detecting if anything is selected/ if the ray collides with any object
            if ( Physics.Raycast (ray,out hit)) {
+
+                //making sure it is the correct tag on the collided object
                 if(hit.transform.tag == "SmallerMass"){
                     cameraFollow = hit.transform;
                     transform.position = cameraFollow.position + offset;
