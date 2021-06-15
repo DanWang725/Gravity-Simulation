@@ -15,16 +15,20 @@ public class CameraPlayer : MonoBehaviour
     private Vector3 courrentSpeed;
     private Vector3 offset = new Vector3(0,5,-7);
     private float sensitivity = 1.0f;
-    private float movementSensitivity = 1.0f;
+    private float movementSensitivity = 0.5f;
 
     public float maxYAngle = 80f;
     private Vector2 currentRotation;
+    public GameObject cameraFollow;
+    public bool isFollowing = false;
 
     void Start()
     {
         transform.position = player.transform.position +offset;
         
     }
+
+
 
     // Update is called once per frame
     void Update()
@@ -52,8 +56,10 @@ public class CameraPlayer : MonoBehaviour
         float xMovement = Input.GetAxis("Vertical")*movementSensitivity;
         float yMovement = Input.GetAxis("Vertical Y")*movementSensitivity;
         float zMovement = Input.GetAxis("Horizontal")*movementSensitivity;
-
-        transform.position = transform.position + new Vector3(zMovement,yMovement,xMovement);
+        transform.Translate(Vector3.forward * xMovement);
+        transform.Translate(Vector3.up * yMovement);
+        transform.Translate(Vector3.right * zMovement);
+        //transform.position = transform.position + new Vector3(zMovement,yMovement,xMovement);
 
     }
 }
