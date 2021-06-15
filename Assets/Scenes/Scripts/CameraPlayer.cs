@@ -19,7 +19,7 @@ public class CameraPlayer : MonoBehaviour
 
     public float maxYAngle = 80f;
     private Vector2 currentRotation;
-    public GameObject cameraFollow;
+    public Transform cameraFollow;
     public bool isFollowing = false;
 
     void Start()
@@ -60,6 +60,20 @@ public class CameraPlayer : MonoBehaviour
         transform.Translate(Vector3.up * yMovement);
         transform.Translate(Vector3.right * zMovement);
         //transform.position = transform.position + new Vector3(zMovement,yMovement,xMovement);
+
+        if ( Input.GetMouseButtonDown (0)){ 
+           RaycastHit hit; 
+           Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
+           if ( Physics.Raycast (ray,out hit)) {
+                if(hit.transform.tag == "SmallerMass"){
+                    cameraFollow = hit.transform;
+                    transform.position = cameraFollow.position + offset;
+                    Debug.Log("You selected the " + hit.transform.name); // ensure you picked right object
+                }
+             
+           }
+         }
+
 
     }
 }

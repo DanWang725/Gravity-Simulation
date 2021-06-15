@@ -1002,7 +1002,7 @@ GameObject:
   - component: {fileID: 1102252511}
   m_Layer: 0
   m_Name: Object (1)
-  m_TagString: Untagged
+  m_TagString: SmallerMass
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1616,7 +1616,7 @@ GameObject:
   - component: {fileID: 2009091996}
   m_Layer: 0
   m_Name: Object
-  m_TagString: Untagged
+  m_TagString: SmallerMass
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
