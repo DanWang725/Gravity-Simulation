@@ -17,7 +17,7 @@ public class ObjectController : MonoBehaviour
 	private decimal[] prevPos = new decimal[3];
 	private decimal[] newPos = new decimal[3];
 
-	public float curVelMag;
+	public float curVelMag, curAccelMag;
 	public float kinEnerg;
 	public float[] gravPotEnerg = new float[3]; 
 	public float tempGravEnergy;
@@ -87,10 +87,11 @@ public class ObjectController : MonoBehaviour
 	public void updatePos(decimal time){
 		for(int i = 0;i<3;i++){
 			prevPos[i] = newPos[i];
-			newPos[i] = prevPos[i] + velocity[i] * time + acceleration[i]*time*time;
+			newPos[i] = prevPos[i] + velocity[i] * time + acceleration[i]*time*time; //d = v1*T + a*T^2
 			velocity[i] = (newPos[i] - prevPos[i])/time;
 		}
 		curVelMag = new Vector3((float)velocity[0],(float)velocity[1],(float)velocity[2]).magnitude*10000;
+		curAccelMag = new Vector3((float)acceleration[0],(float)acceleration[1],(float)acceleration[2]).magnitude*10000;
 		centrifugalForce = (curVelMag*curVelMag)/distanceFromPlanet;
 	}
 
@@ -105,7 +106,7 @@ public class ObjectController : MonoBehaviour
     	}
     	//going through the array to set values, with given position and initial velocity 
     	for(int i = 0; i<3;i++){
-    		newPos[i] = (decimal)transform.position[i];
+    		newPos[i] = prevPos[i] = (decimal)transform.position[i];
     		velocity[i] = (decimal)initVelocity[i];
     	}
     	
