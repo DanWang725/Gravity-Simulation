@@ -14,6 +14,8 @@ public class CameraPlayer : MonoBehaviour
     private PlanetController speedController;
     private Vector3 courrentSpeed;
     private Vector3 offset = new Vector3(0,5,-7);
+    private Vector3 oldPos;
+
     private float sensitivity = 1.0f;
     private float movementSensitivity = 0.5f;
 
@@ -25,7 +27,7 @@ public class CameraPlayer : MonoBehaviour
     void Start()
     {
         transform.position = player.transform.position +offset;
-        
+        oldPos = cameraFollow.position;
     }
 
 
@@ -76,10 +78,21 @@ public class CameraPlayer : MonoBehaviour
                     cameraFollow = hit.transform;
                     transform.position = cameraFollow.position + offset;
                     Debug.Log("You selected the " + hit.transform.name); // ensure you picked right object
+                    if(isFollowing){
+                        isFollowing = false;
+                    } else{
+                        isFollowing = true;
+                    }
+                    
                 }
              
            }
-         }
+        }
+
+        if(isFollowing){
+            transform.position += cameraFollow.position - oldPos;
+            oldPos = cameraFollow.position;
+        }
 
 
     }

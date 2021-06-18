@@ -967,8 +967,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 2009091988}
   maxYAngle: 80
-  cameraFollow: {fileID: 0}
-  isFollowing: 0
+  cameraFollow: {fileID: 2009091993}
+  isFollowing: 1
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1021,12 +1021,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initVelocity: {x: 0.25, y: 0, z: 0.25}
   curVelMag: 0
+  curAccelMag: 0
   kinEnerg: 0
   gravPotEnerg:
   - 0
   - 0
   - 0
   tempGravEnergy: 0
+  distanceFromPlanet: 0
+  calculatedForce: 0
+  centrifugalForce: 0
+  doTangentalSpeed: 0
 --- !u!96 &1102252512
 TrailRenderer:
   serializedVersion: 2
@@ -1303,7 +1308,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1800321406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1516,7 +1521,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1953049621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1823,14 +1828,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60b937b45d26b674a844405e0ab6eca3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initVelocity: {x: 0.3535, y: 0, z: 0}
+  initVelocity: {x: 0, y: 0.4999288, z: 0}
   curVelMag: 0
+  curAccelMag: 0
   kinEnerg: 0
   gravPotEnerg:
   - 0
   - 0
   - 0
   tempGravEnergy: 0
+  distanceFromPlanet: 0
+  calculatedForce: 0
+  centrifugalForce: 0
+  doTangentalSpeed: 0
 --- !u!114 &2009091996
 MonoBehaviour:
   m_ObjectHideFlags: 0

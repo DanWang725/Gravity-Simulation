@@ -47,6 +47,10 @@ public class ObjectController : MonoBehaviour
     //calculating the gravitational energy for the current gravitational force
 	public void getGPE(float distance, decimal G, decimal planetMass){
 		tempGravEnergy = (float)((G*planetMass*objectMass)/(decimal)distance);
+
+		curVelMag = new Vector3((float)velocity[0],(float)velocity[1],(float)velocity[2]).magnitude*10000;
+		curAccelMag = new Vector3((float)acceleration[0],(float)acceleration[1],(float)acceleration[2]).magnitude*10000;
+		centrifugalForce = (curVelMag*curVelMag)/distanceFromPlanet;
 	}
 
 	//calculates the force without a vector (just force)
@@ -90,9 +94,7 @@ public class ObjectController : MonoBehaviour
 			newPos[i] = prevPos[i] + velocity[i] * time + acceleration[i]*time*time; //d = v1*T + a*T^2
 			velocity[i] = (newPos[i] - prevPos[i])/time;
 		}
-		curVelMag = new Vector3((float)velocity[0],(float)velocity[1],(float)velocity[2]).magnitude*10000;
-		curAccelMag = new Vector3((float)acceleration[0],(float)acceleration[1],(float)acceleration[2]).magnitude*10000;
-		centrifugalForce = (curVelMag*curVelMag)/distanceFromPlanet;
+		
 	}
 
     // Start is called before the first frame update
@@ -115,7 +117,7 @@ public class ObjectController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-    	decimal time = (decimal)0.1f;
+    	decimal time = (decimal)1f;
     	hugePlanets = GameObject.FindGameObjectsWithTag("HighMass");
     	//Debug.Log(hugePlanets.Length);
     	decimal[] fNet = new decimal[3];
