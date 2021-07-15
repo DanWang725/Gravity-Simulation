@@ -50,7 +50,7 @@ public class ObjectController : MonoBehaviour
 
 		curVelMag = new Vector3((float)velocity[0],(float)velocity[1],(float)velocity[2]).magnitude*10000;
 		curAccelMag = new Vector3((float)acceleration[0],(float)acceleration[1],(float)acceleration[2]).magnitude*10000;
-		centrifugalForce = (curVelMag*curVelMag)/distanceFromPlanet;
+		centrifugalForce = ((curVelMag*curVelMag)/distanceFromPlanet)*(float)objectMass;
 	}
 
 	//calculates the force without a vector (just force)
