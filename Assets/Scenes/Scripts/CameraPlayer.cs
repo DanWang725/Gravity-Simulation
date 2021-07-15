@@ -23,6 +23,8 @@ public class CameraPlayer : MonoBehaviour
     private Vector2 currentRotation;
     public Transform cameraFollow;
     public bool isFollowing = false;
+    private bool isMovingTowards = false;
+    private float dist;
 
     void Start()
     {
@@ -76,12 +78,18 @@ public class CameraPlayer : MonoBehaviour
                 //making sure it is the correct tag on the collided object
                 if(hit.transform.tag == "SmallerMass"){
                     cameraFollow = hit.transform;
-                    transform.position = cameraFollow.position + offset;
+                    
                     Debug.Log("You selected the " + hit.transform.name); // ensure you picked right object
+
                     if(isFollowing){
                         isFollowing = false;
-                    } else{
+                        isMovingTowards = false;
+                    } else {
                         isFollowing = true;
+                        isMovingTowards = true;
+                        dist = Vector3.Distance(transform.position,cameraFollow.position);
+                        //transform.position = cameraFollow.position + offset;
+                        oldPos = cameraFollow.position;
                     }
                     
                 }
@@ -89,6 +97,17 @@ public class CameraPlayer : MonoBehaviour
            }
         }
 
+        if(isMovingTowards){
+            float step = dist * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, cameraFollow.position + offset, step);
+
+            if (Vector3.Distance(transform.position, cameraFollow.position + offset) < 0.001f)
+            {
+                // Swap the position of the cylinder.
+                isMovingTowards = false;
+            }
+        } 
+        
         if(isFollowing){
             transform.position += cameraFollow.position - oldPos;
             oldPos = cameraFollow.position;
