@@ -26,13 +26,15 @@ public class CameraPlayer : MonoBehaviour
     private bool isMovingTowards = false;
     private float dist;
 
+    public GameObject pCanvas;
+    // public Text textDisplay;
+    // public string textValue = "";
+
     void Start()
     {
         transform.position = player.transform.position +offset;
         oldPos = cameraFollow.position;
     }
-
-
 
     // Update is called once per frame
     void Update()
@@ -81,22 +83,26 @@ public class CameraPlayer : MonoBehaviour
                     
                     Debug.Log("You selected the " + hit.transform.name); // ensure you picked right object
 
+                                //if the camera is following a planet already, stop following
                     if(isFollowing){
                         isFollowing = false;
                         isMovingTowards = false;
-                    } else {
+                        pCanvas.SendMessage("disableTextDisplayPlanet");
+                    } else {    //if the camera is not following a planet currently, then start following it
                         isFollowing = true;
                         isMovingTowards = true;
                         dist = Vector3.Distance(transform.position,cameraFollow.position);
                         //transform.position = cameraFollow.position + offset;
                         oldPos = cameraFollow.position;
+
+                        pCanvas.SendMessage("followThis", hit.transform.gameObject.GetComponent<ObjectController>());
                     }
                     
                 }
              
            }
         }
-
+        //transition to following the planet
         if(isMovingTowards){
             float step = dist * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, cameraFollow.position + offset, step);
