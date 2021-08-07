@@ -7,8 +7,6 @@ using TMPro;
 public class PlanetStat : MonoBehaviour
 {
     //public GameObject camera;
-    private Text statText;
-    private string textValue = "";
     public ObjectController planetScript;
     public TextMeshProUGUI tmp;
 

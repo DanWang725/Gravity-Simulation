@@ -10,9 +10,6 @@ public class CameraPlayer : MonoBehaviour
 
     // Start is called before the first frame update
     public GameObject player;
-    private GameObject go;
-    private PlanetController speedController;
-    private Vector3 courrentSpeed;
     private Vector3 offset = new Vector3(0,5,-7);
     private Vector3 oldPos;
 
@@ -27,8 +24,6 @@ public class CameraPlayer : MonoBehaviour
     private float dist;
 
     public GameObject pCanvas;
-    // public Text textDisplay;
-    // public string textValue = "";
 
     void Start()
     {
@@ -39,11 +34,6 @@ public class CameraPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        go = GameObject.Find("Planet");
-        speedController = go.GetComponent<PlanetController>();
-        courrentSpeed = speedController.planetRigidbody.position;
-        //offset.z = -5-courrentSpeed.y/20;
-       // offset.y = -courrentSpeed.y*0.0001f;
         
         //handling camera rotation when the right mouse button is held down
         if(Input.GetButton("MoveCamera")){
@@ -102,6 +92,7 @@ public class CameraPlayer : MonoBehaviour
              
            }
         }
+
         //transition to following the planet
         if(isMovingTowards){
             float step = dist * Time.deltaTime;
@@ -113,8 +104,11 @@ public class CameraPlayer : MonoBehaviour
                 isMovingTowards = false;
             }
         } 
-        
+
+        //if the camera is supposed to be following the selected planet
         if(isFollowing){
+
+            //moving the camera to the same coordinates it was in the previous position relative to the selected planet
             transform.position += cameraFollow.position - oldPos;
             oldPos = cameraFollow.position;
         }

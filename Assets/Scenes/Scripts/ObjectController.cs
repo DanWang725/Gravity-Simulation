@@ -5,18 +5,20 @@ using UnityEngine;
 //this controls the lesser (smaller planets)
 public class ObjectController : MonoBehaviour
 {
-	public decimal objectMass = 120;
+	public decimal objectMass = 120;	//this is in kg
 	public decimal radius = 123;
 
-	public Vector3 initVelocity = new Vector3(0f,0f,0f);
+	public Vector3 initVelocity = new Vector3(0f,0f,0f); //can be set in here or in editor
 
 	private decimal[] forceGrav = new decimal[3];//this should be for the current force of grav (in a for each loop)
 	//private decimal[] fNet = new decimal[3]; //add the forceGrav to this
 
+	//decimal movement unit vectors, store the movement in each axis of space
 	private decimal[] velocity = new decimal[3];
 	private decimal[] prevPos = new decimal[3];
 	private decimal[] newPos = new decimal[3];
 
+	//most of these are just for the observation values
 	public float curVelMag, curAccelMag;
 	public float kinEnerg;
 	public float[] gravPotEnerg = new float[3]; 
@@ -148,6 +150,15 @@ public class ObjectController : MonoBehaviour
 
     	kinEnerg = (0.5f)*(float)objectMass*curVelMag*curVelMag;
 
+
+    }
+    //is called when this planet is clicked on
+    void SelectedThis(){
+
+    }
+
+    //is called when this planet is unselected
+    void UnSelectedThis(){
 
     }
 }
