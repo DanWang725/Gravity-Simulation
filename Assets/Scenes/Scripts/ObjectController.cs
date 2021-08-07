@@ -31,6 +31,8 @@ public class ObjectController : MonoBehaviour
 	private decimal[] acceleration = new decimal[3];
 
 	private GameObject[] hugePlanets;
+
+	private float simTime = 1f;
          
 	//start up function, calculates the binding speed to orbit the planet
 	public Vector3 calculateOrbitalSpeed(GameObject pos1, decimal planetMass){
@@ -102,7 +104,7 @@ public class ObjectController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+    	EventManager.OnPause += pauseSim;
     	if(doTangentalSpeed){
     		hugePlanets = GameObject.FindGameObjectsWithTag("HighMass");
     		HugePlanetController pl = hugePlanets[0].GetComponent<HugePlanetController>();
@@ -119,7 +121,7 @@ public class ObjectController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-    	decimal time = (decimal)1f;
+    	decimal time = (decimal)simTime;
     	hugePlanets = GameObject.FindGameObjectsWithTag("HighMass");
     	//Debug.Log(hugePlanets.Length);
     	decimal[] fNet = new decimal[3];
@@ -150,7 +152,6 @@ public class ObjectController : MonoBehaviour
 
     	kinEnerg = (0.5f)*(float)objectMass*curVelMag*curVelMag;
 
-
     }
     //is called when this planet is clicked on
     void SelectedThis(){
@@ -160,5 +161,13 @@ public class ObjectController : MonoBehaviour
     //is called when this planet is unselected
     void UnSelectedThis(){
 
+    }
+
+    void pauseSim(){
+    	if(simTime == 1f){
+    		simTime = 0f;
+    	} else{
+    		simTime = 1f;
+    	}
     }
 }
