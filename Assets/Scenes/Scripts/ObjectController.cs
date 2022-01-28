@@ -33,6 +33,7 @@ public class ObjectController : MonoBehaviour
 	private GameObject[] hugePlanets;
 
 	private float simTime = 1f;
+	private bool doSim = true;
          
 	//start up function, calculates the binding speed to orbit the planet
 	public Vector3 calculateOrbitalSpeed(GameObject pos1, decimal planetMass){
@@ -121,37 +122,42 @@ public class ObjectController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-    	decimal time = (decimal)simTime;
-    	hugePlanets = GameObject.FindGameObjectsWithTag("HighMass");
-    	//Debug.Log(hugePlanets.Length);
-    	decimal[] fNet = new decimal[3];
-    	int counter = 0;
-    	
-    	//going through each planet with high mass and adding the gravitational force
-    	foreach(GameObject planet in hugePlanets) {
-    		HugePlanetController pl = planet.GetComponent<HugePlanetController>();
-    		//decimal pureForce = calculatePureForce(planet, planet.objectMass);
+		if (doSim)
+		{
+			decimal time = (decimal)simTime;
+			hugePlanets = GameObject.FindGameObjectsWithTag("HighMass");
+			//Debug.Log(hugePlanets.Length);
+			decimal[] fNet = new decimal[3];
+			int counter = 0;
 
-    		calculateForce(forceGrav, planet, pl.objectMass);
+			//going through each planet with high mass and adding the gravitational force
+			foreach (GameObject planet in hugePlanets)
+			{
+				HugePlanetController pl = planet.GetComponent<HugePlanetController>();
+				//decimal pureForce = calculatePureForce(planet, planet.objectMass);
 
-    		gravPotEnerg[counter] = tempGravEnergy;
-    		counter++;
-    		//do stuff with forcegrav here
-    		for(int i = 0; i< 3; i++){
-    			fNet[i] += forceGrav[i];
-    		}
+				calculateForce(forceGrav, planet, pl.objectMass);
 
-        	//do stuff here
-    	}
-    	for(int i = 0; i<3;i++){
-    		acceleration[i] = (fNet[i]/objectMass);
-    	}
-    	
-    	updatePos(time);
-    	transform.position = new Vector3((float)newPos[0],(float)newPos[1],(float)newPos[2]);
+				gravPotEnerg[counter] = tempGravEnergy;
+				counter++;
+				//do stuff with forcegrav here
+				for (int i = 0; i < 3; i++)
+				{
+					fNet[i] += forceGrav[i];
+				}
 
-    	kinEnerg = (0.5f)*(float)objectMass*curVelMag*curVelMag;
+				//do stuff here
+			}
+			for (int i = 0; i < 3; i++)
+			{
+				acceleration[i] = (fNet[i] / objectMass);
+			}
 
+			updatePos(time);
+			transform.position = new Vector3((float)newPos[0], (float)newPos[1], (float)newPos[2]);
+
+			kinEnerg = (0.5f) * (float)objectMass * curVelMag * curVelMag;
+		}
     }
     //is called when this planet is clicked on
     void SelectedThis(){
@@ -164,10 +170,10 @@ public class ObjectController : MonoBehaviour
     }
 
     void pauseSim(){
-    	if(simTime == 1f){
-    		simTime = 0f;
+    	if(doSim){
+    		doSim = false;
     	} else{
-    		simTime = 1f;
+    		doSim = true;
     	}
     }
 }
