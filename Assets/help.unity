@@ -161,10 +161,6 @@ MonoBehaviour:
   planet1: {fileID: 81676752}
   planet2: {fileID: 2009091988}
   planetRigidbody: {fileID: 2009091989}
-  planetPosition1: {x: 0, y: 0, z: 0}
-  planetPosition2: {x: 0, y: 0, z: 0}
-  originalPosition: {x: 0, y: 0, z: 0}
-  newPosition: {x: 0, y: 0, z: 0}
   velUp: 0
   calculatedEV: 0
   newPosTest: {x: 0, y: 0, z: 0}
@@ -526,10 +522,6 @@ MonoBehaviour:
   planet1: {fileID: 90070934}
   planet2: {fileID: 2009091988}
   planetRigidbody: {fileID: 2009091989}
-  planetPosition1: {x: 0, y: 0, z: 0}
-  planetPosition2: {x: 0, y: 0, z: 0}
-  originalPosition: {x: 0, y: 0, z: 0}
-  newPosition: {x: 0, y: 0, z: 0}
   velUp: 0
   calculatedEV: 0
   newPosTest: {x: 0, y: 0, z: 0}
@@ -823,14 +815,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2009091988}
-  go: {fileID: 0}
-  speedController: {fileID: 0}
-  courrentSpeed: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 5, z: -7}
-  sensitivity: 1
-  movementSensitivity: 1
   maxYAngle: 80
-  currentRotation: {x: 0, y: 0}
+  cameraFollow: {fileID: 2009091993}
+  isFollowing: 1
+  pCanvas: {fileID: 1800321405}
 --- !u!1 &1102252510
 GameObject:
   m_ObjectHideFlags: 0
@@ -847,8 +835,8 @@ GameObject:
   - component: {fileID: 1102252512}
   - component: {fileID: 1102252511}
   m_Layer: 0
-  m_Name: Object (1)
-  m_TagString: Untagged
+  m_Name: smallObject2
+  m_TagString: SmallerMass
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -867,13 +855,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initVelocity: {x: 0.25, y: 0, z: 0.25}
   curVelMag: 0
+  curAccelMag: 0
   kinEnerg: 0
   gravPotEnerg:
   - 0
   - 0
   - 0
   tempGravEnergy: 0
-  hugePlanets: []
+  distanceFromPlanet: 0
+  calculatedForce: 0
+  centrifugalForce: 0
+  doTangentalSpeed: 0
 --- !u!96 &1102252512
 TrailRenderer:
   serializedVersion: 2
@@ -1100,10 +1092,6 @@ MonoBehaviour:
   followThis: {fileID: 2009091988}
   textHere: {fileID: 1800321405}
   countText: {fileID: 1800321407}
-  go: {fileID: 0}
-  speedController: {fileID: 0}
-  courrentSpeed: 0
-  offset: {x: 1, y: 0, z: 0}
 --- !u!102 &1800321407
 TextMesh:
   serializedVersion: 3
@@ -1189,7 +1177,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 0}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1299,8 +1287,8 @@ GameObject:
   - component: {fileID: 2009091994}
   - component: {fileID: 2009091995}
   m_Layer: 0
-  m_Name: Object
-  m_TagString: Untagged
+  m_Name: smallObject
+  m_TagString: SmallerMass
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1509,10 +1497,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initVelocity: {x: 0.3535, y: 0, z: 0}
   curVelMag: 0
+  curAccelMag: 0
   kinEnerg: 0
   gravPotEnerg:
   - 0
   - 0
   - 0
   tempGravEnergy: 0
-  hugePlanets: []
+  distanceFromPlanet: 0
+  calculatedForce: 0
+  centrifugalForce: 0
+  doTangentalSpeed: 0

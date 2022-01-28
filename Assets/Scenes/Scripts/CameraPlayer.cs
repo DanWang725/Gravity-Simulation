@@ -60,7 +60,8 @@ public class CameraPlayer : MonoBehaviour
         //transform.position = transform.position + new Vector3(zMovement,yMovement,xMovement);
 
         //raycast for planet selection
-        if ( Input.GetMouseButtonDown (0)){ 
+        if ( Input.GetMouseButtonDown (0)){
+            Debug.Log("click");
            RaycastHit hit; 
            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
 

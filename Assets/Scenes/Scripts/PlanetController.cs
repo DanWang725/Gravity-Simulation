@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//depracated script
 public class PlanetController : MonoBehaviour
 {
 	public GameObject planet1;
