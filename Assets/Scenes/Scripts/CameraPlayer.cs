@@ -22,6 +22,7 @@ public class CameraPlayer : MonoBehaviour
     public bool isFollowing = false;
     private bool isMovingTowards = false;
     private float dist;
+    public GameObject debugLine;
 
     public GameObject pCanvas;
 
@@ -70,6 +71,9 @@ public class CameraPlayer : MonoBehaviour
 
                 //making sure it is the correct tag on the collided object
                 if(hit.transform.tag == "SmallerMass"){
+                    Vector3 direction = hit.point - ray.origin;
+                    GameObject temp = Instantiate(debugLine, hit.point, Quaternion.LookRotation(direction, Vector3.up));
+
                     cameraFollow = hit.transform;
                     
                     Debug.Log("You selected the " + hit.transform.name); // ensure you picked right object

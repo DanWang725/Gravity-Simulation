@@ -160,13 +160,13 @@ public class ObjectController : MonoBehaviour
 		}
     }
     //is called when this planet is clicked on
-    void SelectedThis(){
-
+    public void selectedThis(){
+		Debug.Log("I am selected!");
     }
 
     //is called when this planet is unselected
-    void UnSelectedThis(){
-
+    public void unSelectedThis(){
+		Debug.Log("I am Unselected!");
     }
 
     void pauseSim(){

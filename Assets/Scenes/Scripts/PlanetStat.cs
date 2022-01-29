@@ -28,6 +28,7 @@ public class PlanetStat : MonoBehaviour
     }
     void disableTextDisplayPlanet(){
         displayValue = false;
+        planetScript.unSelectedThis();
         tmp.SetText("");
     }
     //set the new planet to get values from
