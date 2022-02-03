@@ -24,10 +24,12 @@ public class LargeCoords
     public decimal y;
     public decimal z;
 
+    //constructors
     public LargeCoords() => setVal(0,0,0);
     public LargeCoords(decimal forward, decimal up, decimal side) => setVal(forward,up,side);
     public LargeCoords(Vector3 vec) => setVal(vec);
     
+    //operator overrides
     public static LargeCoords operator +(LargeCoords a, LargeCoords b){
         LargeCoords largeCoords = new LargeCoords(a.x + b.x, a.y + b.y, a.z + b.z);
         return largeCoords;
