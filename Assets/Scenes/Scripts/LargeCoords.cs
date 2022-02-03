@@ -5,16 +5,22 @@ using UnityEngine;
 //stores the vector in a larger variable size to store more digits
 public class LargeCoords
 {
-    public setVal(decimal forward, decimal up, decimal side){
+    //Sets the values of the coordinates to the input
+    public void setVal(decimal forward, decimal up, decimal side){
         x = forward;
         y = up;
         z = side;
     }
-    public setVal(Vector3 vec){
+    //Sets the values of the coordinates with the given vector3
+    public void setVal(Vector3 vec){
         x = (decimal)vec[0];
         y = (decimal)vec[1];
         z = (decimal)vec[2];
     }
+    public Vector3 getVector(){
+        return new Vector3((float)x,(float)y,(float)z);
+    }
+    
     decimal x;
     decimal y;
     decimal z;
