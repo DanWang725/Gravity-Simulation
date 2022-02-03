@@ -87,7 +87,7 @@ public class CameraPlayer : MonoBehaviour
                         isFollowing = true;
                         isMovingTowards = true;
                         dist = Vector3.Distance(transform.position,cameraFollow.position);
-                        //transform.position = cameraFollow.position + offset;
+
                         oldPos = cameraFollow.position;
 
                         pCanvas.SendMessage("followThis", hit.transform.gameObject.GetComponent<newPlanetController>());
@@ -121,64 +121,3 @@ public class CameraPlayer : MonoBehaviour
 
     }
 }
-
-//class to hold any basic planet stuff
-/*
-public abstract class PlanetV{
-    private float mass;
-    private float radius;
-    private Vector3 planetPosition;
-
-    //constructor
-    public BasicPlanetStatistics(float mass, float radius, Vector3 planetPosition){
-        this.mass = mass;
-        this.radius = radius;
-        this.planetPosition = planetPosition;
-    }
-    //these are getter methods to get values
-    public float getM(){
-        return mass;
-    }
-    public float getR(){
-        return radius;
-    }
-    public Vector3 getP(){
-        return planetPosition;
-    }
-}
-
-public class MovingPlanet : PlanetV{
-    private decimal[] ogPos = new decimal[3];
-    private decimal[] newPos = new decimal[3];
-    private decimal[] plAccel = new decimal[3];
-    private decimal[] plVel = new decimal[3];
-
-    public MovingPlanet(decimal[] velocity)
-    : base(mass, radius, planetPosition)
-    {
-        plVel = velocity;
-    }
-
-    private void setPosToArr(){
-        ogPos[0] = getP().x;
-        ogPos[1] = getP().y;
-        ogPos[2] = getP().z;
-    }
-
-    public void setAccel(decimal[] acceleration){
-        plAccel = acceleration;
-    }
-
-    public decimal[] getAccel(){
-        return plAccel;
-    }
-
-    public void setVel(decimal[] velocity){
-        plVel = velocity;
-    }
-
-    public decimal[] getVel(){
-        return plVel;
-    }
-
-}*/

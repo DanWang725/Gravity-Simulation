@@ -6,7 +6,6 @@ using UnityEngine;
 public class newPlanetController : MonoBehaviour
 {
     public Planet Planet;
-	//public decimal objectMass = 120;	//this is in kg
 	public decimal radius = 123;
 
 	public Vector3 initVelocity = new Vector3(0f,0f,0f); //can be set in here or in editor
@@ -40,7 +39,7 @@ public class newPlanetController : MonoBehaviour
 
     //calculating the gravitational energy for the current gravitational force
 	void getGPE(float distance, decimal G, decimal planetMass){
-		//tempGravEnergy = (float)((G*planetMass*Planet.Mass)/(decimal)distance);
+		//tempGravEnergy = (float)((G*planetMass*Planet.Mass)/(decimal)distance); never use this!!
 
 		curVelMag = Planet.Velocity.getVector().magnitude*10000;
 		curAccelMag = Planet.Acceleration.getVector().magnitude*10000;
@@ -48,15 +47,16 @@ public class newPlanetController : MonoBehaviour
 	}
 
 	//calculates the force without a vector (just force)
-	decimal calculatePureForce(GameObject pos1, decimal planetMass){
+	decimal calculatePureForce(GameObject hugePlanetPos, decimal planetMass){
 		//getting the distance between the object and the planet
-		float distance = Vector3.Distance(pos1.transform.position, Planet.Position.getVector());
+		float distance = Vector3.Distance(hugePlanetPos.transform.position, Planet.Position.getVector());
 		decimal G = (decimal)6.67f*(decimal)Mathf.Pow(10,-11);
 		
 		//adjusting distance to be the correct units - in the simulation 1 unit is 10km, 10000m
 		distance = distance * 10000;
 		distanceFromPlanet = (float)distance;
-		getGPE(distance, G, planetMass);
+
+		getGPE(distance, G, planetMass); //only calculates stats for viewing
 
 		float distanceSquared = distance * distance;
 
@@ -67,8 +67,8 @@ public class newPlanetController : MonoBehaviour
 
 	}
 	//calculates the heading of the force
-	public Vector3 calculateHeading(GameObject pos1){
-		Vector3 heading = (pos1.transform.position - Planet.Position.getVector());//larger mass (huge planet tag) goes first
+	public Vector3 calculateHeading(GameObject hugePlanetPos){
+		Vector3 heading = (hugePlanetPos.transform.position - Planet.Position.getVector());//larger mass (huge planet tag) goes first
 		return (heading/heading.magnitude);
 	}
 
@@ -134,14 +134,13 @@ public class newPlanetController : MonoBehaviour
 
 		kinEnerg = (0.5f) * (float)Planet.Mass * curVelMag * curVelMag;
 	}
-    //is called when this planet is clicked on
     public void selectedThis(){
 		Debug.Log("I am selected!");
     }
 
-    //is called when this planet is unselected
     public void unSelectedThis(){
 		Debug.Log("I am Unselected!");
+
     }
 
     void pauseSim() => doSim = !doSim;
