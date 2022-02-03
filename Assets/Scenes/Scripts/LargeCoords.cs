@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 //stores the vector in a larger variable size to store more digits
@@ -30,6 +29,10 @@ public class LargeCoords
     
     public static LargeCoords operator +(LargeCoords a, LargeCoords b){
         LargeCoords largeCoords = new LargeCoords(a.x + b.x, a.y + b.y, a.z + b.z);
+        return largeCoords;
+    }
+    public static LargeCoords operator -(LargeCoords a, LargeCoords b){
+        LargeCoords largeCoords = new LargeCoords(a.x - b.x, a.y - b.y, a.z - b.z);
         return largeCoords;
     }
 
