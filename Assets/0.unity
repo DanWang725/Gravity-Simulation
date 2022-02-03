@@ -1307,7 +1307,7 @@ MonoBehaviour:
   player: {fileID: 2009091988}
   maxYAngle: 80
   cameraFollow: {fileID: 2009091993}
-  isFollowing: 1
+  isFollowing: 0
   debugLine: {fileID: 630963112}
   pCanvas: {fileID: 381164939}
 --- !u!114 &963194230

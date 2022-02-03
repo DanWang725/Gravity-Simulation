@@ -122,43 +122,44 @@ public class ObjectController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-		if (doSim)
+		if (!doSim){
+			return;
+		}
+		
+		decimal time = (decimal)simTime;
+		hugePlanets = GameObject.FindGameObjectsWithTag("HighMass");
+		//Debug.Log(hugePlanets.Length);
+		decimal[] fNet = new decimal[3];
+		int counter = 0;
+
+		//going through each planet with high mass and adding the gravitational force
+		foreach (GameObject planet in hugePlanets)
 		{
-			decimal time = (decimal)simTime;
-			hugePlanets = GameObject.FindGameObjectsWithTag("HighMass");
-			//Debug.Log(hugePlanets.Length);
-			decimal[] fNet = new decimal[3];
-			int counter = 0;
+			HugePlanetController pl = planet.GetComponent<HugePlanetController>();
+			//decimal pureForce = calculatePureForce(planet, planet.objectMass);
 
-			//going through each planet with high mass and adding the gravitational force
-			foreach (GameObject planet in hugePlanets)
-			{
-				HugePlanetController pl = planet.GetComponent<HugePlanetController>();
-				//decimal pureForce = calculatePureForce(planet, planet.objectMass);
+			calculateForce(forceGrav, planet, pl.objectMass);
 
-				calculateForce(forceGrav, planet, pl.objectMass);
-
-				gravPotEnerg[counter] = tempGravEnergy;
-				counter++;
-				//do stuff with forcegrav here
-				for (int i = 0; i < 3; i++)
-				{
-					fNet[i] += forceGrav[i];
-				}
-
-				//do stuff here
-			}
+			gravPotEnerg[counter] = tempGravEnergy;
+			counter++;
+			//do stuff with forcegrav here
 			for (int i = 0; i < 3; i++)
 			{
-				acceleration[i] = (fNet[i] / objectMass);
+				fNet[i] += forceGrav[i];
 			}
 
-			updatePos(time);
-			transform.position = new Vector3((float)newPos[0], (float)newPos[1], (float)newPos[2]);
-
-			kinEnerg = (0.5f) * (float)objectMass * curVelMag * curVelMag;
+			//do stuff here
 		}
-    }
+		for (int i = 0; i < 3; i++)
+		{
+			acceleration[i] = (fNet[i] / objectMass);
+		}
+
+		updatePos(time);
+		transform.position = new Vector3((float)newPos[0], (float)newPos[1], (float)newPos[2]);
+
+		kinEnerg = (0.5f) * (float)objectMass * curVelMag * curVelMag;
+	}
     //is called when this planet is clicked on
     public void selectedThis(){
 		Debug.Log("I am selected!");
@@ -169,11 +170,6 @@ public class ObjectController : MonoBehaviour
 		Debug.Log("I am Unselected!");
     }
 
-    void pauseSim(){
-    	if(doSim){
-    		doSim = false;
-    	} else{
-    		doSim = true;
-    	}
-    }
+    void pauseSim() => doSim = !doSim;
+    
 }
