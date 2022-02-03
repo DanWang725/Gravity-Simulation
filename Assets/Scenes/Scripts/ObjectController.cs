@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//clean this up more in the future, possibly replace it
 //this controls the lesser (smaller planets)
 public class ObjectController : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class ObjectController : MonoBehaviour
 
 	public Vector3 initVelocity = new Vector3(0f,0f,0f); //can be set in here or in editor
 
+//this can prob be not global..
 	private decimal[] forceGrav = new decimal[3];//this should be for the current force of grav (in a for each loop)
 	//private decimal[] fNet = new decimal[3]; //add the forceGrav to this
 
