@@ -87,16 +87,15 @@ public class newPlanetController : MonoBehaviour
 	}
 
 	//puts the force value and heading together into an array;
-	public void calculateForce(decimal[] force, GameObject pos1, decimal planetMass){
+	public void calculateForce(LargeCoords force, GameObject pos1, decimal planetMass){
 		decimal pureForce = calculatePureForce(pos1, planetMass);
 		Vector3 forceHeading = calculateHeading(pos1);
-		for(int i = 0; i < 3;i++){
-			force[i] = pureForce*(decimal)forceHeading[i];
-		}
+        force.setVal(pureForce * forceHeading);
 	}
 
 	//update the position in the position arrray, not visual game object.
 	public void updatePos(decimal time){
+
 		for(int i = 0;i<3;i++){
 			prevPos[i] = newPos[i];
 			newPos[i] = prevPos[i] + velocity[i] * time + acceleration[i]*time*time; //d = v1*T + a*T^2
@@ -118,6 +117,7 @@ public class newPlanetController : MonoBehaviour
         Planet.Velocity.setVal(initVelocity);
     	Planet.OldPos.setVal(transform.position);
         Planet.Position.setVal(transform.position);
+        Planet.Acceleration.setVal(0,0,0);
     }
 
     // Update is called once per frame
@@ -130,7 +130,8 @@ public class newPlanetController : MonoBehaviour
 		decimal time = (decimal)simTime;
 		hugePlanets = GameObject.FindGameObjectsWithTag("HighMass");
 		//Debug.Log(hugePlanets.Length);
-		decimal[] fNet = new decimal[3];
+		LargeCoords fNet = new LargeCoords;
+        LargeCoords forceGrav = new LargeCoords;
 		int counter = 0;
 
 		//going through each planet with high mass and adding the gravitational force
@@ -144,17 +145,11 @@ public class newPlanetController : MonoBehaviour
 			gravPotEnerg[counter] = tempGravEnergy;
 			counter++;
 			//do stuff with forcegrav here
-			for (int i = 0; i < 3; i++)
-			{
-				fNet[i] += forceGrav[i];
-			}
-
+            fNet += forceGrav;
 			//do stuff here
 		}
-		for (int i = 0; i < 3; i++)
-		{
-			acceleration[i] = (fNet[i] / objectMass);
-		}
+
+        Planet.Acceleration = fNet/Planet.Mass; //calculating the acceleration w/ fnet = ma
 
 		updatePos(time);
 		transform.position = new Vector3((float)newPos[0], (float)newPos[1], (float)newPos[2]);
