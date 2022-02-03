@@ -99,7 +99,7 @@ public class newPlanetController : MonoBehaviour
 		}*/
 	}
 
-    void setTangental(){
+    public void setTangental(){
         hugePlanets = GameObject.FindGameObjectsWithTag("HighMass");
     	HugePlanetController pl = hugePlanets[0].GetComponent<HugePlanetController>();
     	Planet.Velocity.setVal(calculateOrbitalSpeed(hugePlanets[0], pl.objectMass));

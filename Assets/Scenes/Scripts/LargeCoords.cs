@@ -24,6 +24,7 @@ public class LargeCoords
     public decimal y;
     public decimal z;
 
+    public LargeCoords() => setVal(0,0,0);
     public LargeCoords(decimal forward, decimal up, decimal side) => setVal(forward,up,side);
     public LargeCoords(Vector3 vec) => setVal(vec);
     

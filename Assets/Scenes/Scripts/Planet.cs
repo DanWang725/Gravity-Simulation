@@ -7,8 +7,8 @@ public class Planet : MonoBehaviour
 {
     decimal mass = 123;
     [SerializeField]
-    LargeCoords _velocity;
-    LargeCoords _acceleration;
+    LargeCoords _velocity = new LargeCoords();
+    LargeCoords _acceleration = new LargeCoords();
 
     public LargeCoords Position { get => _position; set => _position = value; }
     public LargeCoords OldPos { get => _oldPos; set => _oldPos = value; }
@@ -16,7 +16,7 @@ public class Planet : MonoBehaviour
     public LargeCoords Acceleration { get => _acceleration; set => _acceleration = value; }
     public decimal Mass { get => mass; set => mass = value; }
 
-    LargeCoords _position;
+    LargeCoords _position = new LargeCoords();
 
-    LargeCoords _oldPos;
+    LargeCoords _oldPos = new LargeCoords();
 }
