@@ -90,7 +90,7 @@ public class CameraPlayer : MonoBehaviour
                         //transform.position = cameraFollow.position + offset;
                         oldPos = cameraFollow.position;
 
-                        pCanvas.SendMessage("followThis", hit.transform.gameObject.GetComponent<ObjectController>());
+                        pCanvas.SendMessage("followThis", hit.transform.gameObject.GetComponent<newPlanetController>());
                     }
                     
                 }

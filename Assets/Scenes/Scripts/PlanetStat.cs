@@ -7,7 +7,7 @@ using TMPro;
 public class PlanetStat : MonoBehaviour
 {
     //public GameObject camera;
-    public ObjectController planetScript;
+    public newPlanetController planetScript;
     public TextMeshProUGUI tmp;
 
     private bool displayValue = false;
@@ -32,9 +32,10 @@ public class PlanetStat : MonoBehaviour
         tmp.SetText("");
     }
     //set the new planet to get values from
-    void followThis(ObjectController s){
+    void followThis(newPlanetController s){
         Debug.Log(s);
         planetScript = s;
+        s.setTangental();
         displayValue = true;
     }
 }
