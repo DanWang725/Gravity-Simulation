@@ -16,11 +16,6 @@ public class newPlanetController : MonoBehaviour
 	private decimal[] forceGrav = new decimal[3];//this should be for the current force of grav (in a for each loop)
 	//private decimal[] fNet = new decimal[3]; //add the forceGrav to this
 
-	//decimal movement unit vectors, store the movement in each axis of space
-	private decimal[] velocity = new decimal[3];
-	private decimal[] prevPos = new decimal[3];
-	private decimal[] newPos = new decimal[3];
-
 	//most of these are just for the observation values
 	public float curVelMag, curAccelMag;
 	public float kinEnerg;
@@ -30,8 +25,6 @@ public class newPlanetController : MonoBehaviour
 	public float calculatedForce;
 	public float centrifugalForce;
 	public bool doTangentalSpeed = false;
-
-	private decimal[] acceleration = new decimal[3];
 
 	private GameObject[] hugePlanets;
 
@@ -54,17 +47,17 @@ public class newPlanetController : MonoBehaviour
 
     //calculating the gravitational energy for the current gravitational force
 	public void getGPE(float distance, decimal G, decimal planetMass){
-		tempGravEnergy = (float)((G*planetMass*objectMass)/(decimal)distance);
+		tempGravEnergy = (float)((G*planetMass*Planet.Mass)/(decimal)distance);
 
-		curVelMag = Planet.Velocity.getVector.magnitude*10000;
-		curAccelMag = new Vector3((float)acceleration[0],(float)acceleration[1],(float)acceleration[2]).magnitude*10000;
-		centrifugalForce = ((curVelMag*curVelMag)/distanceFromPlanet)*(float)objectMass;
+		curVelMag = Planet.Velocity.getVector().magnitude*10000;
+		curAccelMag = Planet.Acceleration.getVector().magnitude*10000;
+		centrifugalForce = ((curVelMag*curVelMag)/distanceFromPlanet)*(float)Planet.Mass;
 	}
 
 	//calculates the force without a vector (just force)
 	public decimal calculatePureForce(GameObject pos1, decimal planetMass){
 		//getting the distance between the object and the planet
-		float distance = Vector3.Distance(pos1.transform.position, Planet.Position.getVector);
+		float distance = Vector3.Distance(pos1.transform.position, Planet.Position.getVector());
 		decimal G = (decimal)6.67f*(decimal)Mathf.Pow(10,-11);
 		
 		//adjusting distance to be the correct units - in the simulation 1 unit is 10km, 10000m
@@ -75,14 +68,14 @@ public class newPlanetController : MonoBehaviour
 		float distanceSquared = distance * distance;
 
 		//run time debug variables
-		decimal force = (G*(decimal)planetMass*(decimal)objectMass/(decimal)distanceSquared)/10000;
+		decimal force = (G*(decimal)planetMass*Planet.Mass/(decimal)distanceSquared)/10000;
 		calculatedForce = (float)force*10000;
 		return force;
 
 	}
 	//calculates the heading of the force
 	public Vector3 calculateHeading(GameObject pos1){
-		Vector3 heading = (pos1.transform.position - Planet.Position.getVector);//larger mass (huge planet tag) goes first
+		Vector3 heading = (pos1.transform.position - Planet.Position.getVector());//larger mass (huge planet tag) goes first
 		return (heading/heading.magnitude);
 	}
 
@@ -90,18 +83,20 @@ public class newPlanetController : MonoBehaviour
 	public void calculateForce(LargeCoords force, GameObject pos1, decimal planetMass){
 		decimal pureForce = calculatePureForce(pos1, planetMass);
 		Vector3 forceHeading = calculateHeading(pos1);
-        force.setVal(pureForce * forceHeading);
+        force.setVal((float)pureForce * forceHeading);
 	}
 
 	//update the position in the position arrray, not visual game object.
 	public void updatePos(decimal time){
-
+        Planet.OldPos = Planet.Position;
+        Planet.Position = Planet.OldPos + Planet.Velocity * time + Planet.Acceleration*time*time;
+        Planet.Velocity = (Planet.Position - Planet.OldPos)/time;
+        /*
 		for(int i = 0;i<3;i++){
 			prevPos[i] = newPos[i];
 			newPos[i] = prevPos[i] + velocity[i] * time + acceleration[i]*time*time; //d = v1*T + a*T^2
 			velocity[i] = (newPos[i] - prevPos[i])/time;
-		}
-		
+		}*/
 	}
 
     void setTangental(){
@@ -130,8 +125,8 @@ public class newPlanetController : MonoBehaviour
 		decimal time = (decimal)simTime;
 		hugePlanets = GameObject.FindGameObjectsWithTag("HighMass");
 		//Debug.Log(hugePlanets.Length);
-		LargeCoords fNet = new LargeCoords;
-        LargeCoords forceGrav = new LargeCoords;
+		LargeCoords fNet = new LargeCoords(0,0,0);
+        LargeCoords forceGrav = new LargeCoords(0,0,0);
 		int counter = 0;
 
 		//going through each planet with high mass and adding the gravitational force
@@ -152,9 +147,9 @@ public class newPlanetController : MonoBehaviour
         Planet.Acceleration = fNet/Planet.Mass; //calculating the acceleration w/ fnet = ma
 
 		updatePos(time);
-		transform.position = new Vector3((float)newPos[0], (float)newPos[1], (float)newPos[2]);
+		transform.position = Planet.Position.getVector();
 
-		kinEnerg = (0.5f) * (float)objectMass * curVelMag * curVelMag;
+		kinEnerg = (0.5f) * (float)Planet.Mass * curVelMag * curVelMag;
 	}
     //is called when this planet is clicked on
     public void selectedThis(){
