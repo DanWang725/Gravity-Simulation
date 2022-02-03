@@ -21,13 +21,34 @@ public class LargeCoords
         return new Vector3((float)x,(float)y,(float)z);
     }
     
-    decimal x;
-    decimal y;
-    decimal z;
+    public decimal x;
+    public decimal y;
+    public decimal z;
 
     public LargeCoords(decimal forward, decimal up, decimal side) => setVal(forward,up,side);
     public LargeCoords(Vector3 vec) => setVal(vec);
     
+    public static LargeCoords operator +(LargeCoords a, LargeCoords b){
+        LargeCoords largeCoords = new LargeCoords(a.x + b.x, a.y + b.y, a.z + b.z);
+        return largeCoords;
+    }
+
+    public static LargeCoords operator *(LargeCoords a, decimal b){
+        a.x *= b;
+        a.y *= b;
+        a.z *= b;
+        return a;
+    }
+
+    public static LargeCoords operator /(LargeCoords a, decimal b){
+        if(b == 0){
+            throw new DivideByZeroException();
+        }
+        a.x /= b;
+        a.y /= b;
+        a.z /= b;
+        return a;
+    }
 
 
 }
