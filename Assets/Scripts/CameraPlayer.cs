@@ -74,7 +74,7 @@ namespace DanWang725
                     if(hit.transform.tag == "SmallerMass"){
                         Vector3 direction = hit.point - ray.origin;
                         GameObject temp = Instantiate(debugLine, hit.point, Quaternion.LookRotation(direction, Vector3.up));
-                        
+                        temp.SetActive(true);
                         cameraFollow = hit.transform;
                     
                         Debug.Log("You selected the " + hit.transform.name); // ensure you picked right object
