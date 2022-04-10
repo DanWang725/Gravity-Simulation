@@ -103,7 +103,7 @@ namespace DanWang725
             if(isMovingTowards){
                 float step = dist * Time.deltaTime;
                 transform.position = Vector3.MoveTowards(transform.position, cameraFollow.position + offset, step);
-
+                transform.rotation = Quaternion.Lerp(cameraFollow.transform.rotation, transform.rotation, 0.5f);
                 if (Vector3.Distance(transform.position, cameraFollow.position + offset) < 0.001f)
                 {
                     // Swap the position of the cylinder.

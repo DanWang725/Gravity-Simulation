@@ -10,6 +10,9 @@ namespace DanWang725.Planets
 
 		public Vector3 initVelocity = new Vector3(0f,0f,0f); //can be set in here or in editor
 
+		public LineRenderer linePlanet;
+
+		public LineRenderer lineVel;
 		//most of these are just for the observation values
 		public float curVelMag, curAccelMag;
 		public float kinEnerg;
@@ -75,6 +78,7 @@ namespace DanWang725.Planets
 		void calculateForce(LargeCoords forceGrav, GameObject pos1, decimal planetMass){
 			decimal pureForce = calculatePureForce(pos1, planetMass);
 			Vector3 forceHeading = calculateHeading(pos1);
+			linePlanet.SetPosition(1, forceHeading * ((float)pureForce * 100));
 			forceGrav.setVal((float)pureForce * forceHeading);
 		}
 
@@ -83,6 +87,7 @@ namespace DanWang725.Planets
 			thisPlanet.OldPos = thisPlanet.Position;
 			thisPlanet.Position = thisPlanet.OldPos + thisPlanet.Velocity * time + thisPlanet.Acceleration*time*time;
 			thisPlanet.Velocity = (thisPlanet.Position - thisPlanet.OldPos)/time;
+			lineVel.SetPosition(1, thisPlanet.Velocity.getVector()*100);
 		}
 
 		public void setTangental(){
