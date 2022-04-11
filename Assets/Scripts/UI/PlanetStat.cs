@@ -26,13 +26,13 @@ namespace DanWang725.UI
                 tmp.SetText("Velocity {0:5}m/s\nAcceleration - {1:4}m/s2", planetScript.curVelMag, planetScript.curAccelMag);
             }
         }
-        void disableTextDisplayPlanet(){
+        public void disableTextDisplayPlanet(){
             displayValue = false;
             planetScript.unSelectedThis();
             tmp.SetText("");
         }
         //set the new planet to get values from
-        void followThis(newPlanetController s){
+        public void followThis(newPlanetController s){
             Debug.Log(s);
             planetScript = s;
             s.setTangental();

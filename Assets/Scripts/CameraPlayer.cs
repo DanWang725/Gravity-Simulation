@@ -1,4 +1,5 @@
 using DanWang725.Planets;
+using DanWang725.UI;
 using UnityEngine;
 
 /*camera movement was used from this post in the unity forums: https://answers.unity.com/questions/1344322/free-mouse-rotating-camera.html
@@ -8,14 +9,14 @@ namespace DanWang725
 {
     public class CameraPlayer : MonoBehaviour
     {
-
+        public PlanetStat display;
         // Start is called before the first frame update
         public GameObject player;
         private Vector3 offset = new Vector3(0,5,-7);
         private Vector3 oldPos;
 
         private float sensitivity = 1.0f;
-        private float movementSensitivity = 0.5f;
+        private float movementSensitivity = 0.1f;
 
         public float maxYAngle = 80f;
         private Vector2 currentRotation;
@@ -53,9 +54,9 @@ namespace DanWang725
             }
 
             //calculating the movement vectors based on movement keys
-            float xMovement = Input.GetAxis("Vertical")*movementSensitivity;
-            float yMovement = Input.GetAxis("Vertical Y")*movementSensitivity;
-            float zMovement = Input.GetAxis("Horizontal")*movementSensitivity;
+            float xMovement = Input.GetAxis("Vertical")*movementSensitivity * (2 * ((Input.GetKey(KeyCode.LeftShift)) ? 2:1));
+            float yMovement = Input.GetAxis("Vertical Y")*movementSensitivity * (2 * ((Input.GetKey(KeyCode.LeftShift)) ? 2:1));
+            float zMovement = Input.GetAxis("Horizontal")*movementSensitivity * (2 * ((Input.GetKey(KeyCode.LeftShift)) ? 2:1));
             transform.Translate(Vector3.forward * xMovement);
             transform.Translate(Vector3.up * yMovement);
             transform.Translate(Vector3.right * zMovement);
@@ -83,15 +84,16 @@ namespace DanWang725
                         if(isFollowing){
                             isFollowing = false;
                             isMovingTowards = false;
-                            pCanvas.SendMessage("disableTextDisplayPlanet");
+                            //pCanvas.SendMessage("disableTextDisplayPlanet");
+                            display.disableTextDisplayPlanet();
                         } else {    //if the camera is not following a planet currently, then start following it
                             isFollowing = true;
                             isMovingTowards = true;
                             dist = Vector3.Distance(transform.position,cameraFollow.position);
 
                             oldPos = cameraFollow.position;
-
-                            pCanvas.SendMessage("followThis", hit.transform.gameObject.GetComponent<newPlanetController>());
+                            display.followThis(hit.transform.gameObject.GetComponent<newPlanetController>());
+                            //pCanvas.SendMessage("followThis", hit.transform.gameObject.GetComponent<newPlanetController>());
                         }
                     
                     }
