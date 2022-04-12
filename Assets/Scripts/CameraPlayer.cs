@@ -12,11 +12,12 @@ namespace DanWang725
         public PlanetStat display;
         // Start is called before the first frame update
         public GameObject player;
-        private Vector3 offset = new Vector3(0,5,-7);
+        private Vector3 offset = new Vector3(0,0,-7);
         private Vector3 oldPos;
+        private Quaternion lookRot;
 
-        private float sensitivity = 1.0f;
-        private float movementSensitivity = 0.1f;
+        private float sensitivity = 1.5f;
+        private float movementSensitivity = 0.01f;
 
         public float maxYAngle = 80f;
         private Vector2 currentRotation;
@@ -75,6 +76,7 @@ namespace DanWang725
                     if(hit.transform.tag == "SmallerMass"){
                         Vector3 direction = hit.point - ray.origin;
                         GameObject temp = Instantiate(debugLine, hit.point, Quaternion.LookRotation(direction, Vector3.up));
+                        lookRot = Quaternion.LookRotation(direction, Vector3.up);
                         temp.SetActive(true);
                         cameraFollow = hit.transform;
                     
@@ -90,7 +92,9 @@ namespace DanWang725
                             isFollowing = true;
                             isMovingTowards = true;
                             dist = Vector3.Distance(transform.position,cameraFollow.position);
-
+                            
+                            transform.rotation = lookRot;
+                            
                             oldPos = cameraFollow.position;
                             display.followThis(hit.transform.gameObject.GetComponent<newPlanetController>());
                             //pCanvas.SendMessage("followThis", hit.transform.gameObject.GetComponent<newPlanetController>());
@@ -104,9 +108,8 @@ namespace DanWang725
             //transition to following the planet
             if(isMovingTowards){
                 float step = dist * Time.deltaTime;
-                transform.position = Vector3.MoveTowards(transform.position, cameraFollow.position + offset, step);
-                transform.rotation = Quaternion.Lerp(cameraFollow.transform.rotation, transform.rotation, 0.5f);
-                if (Vector3.Distance(transform.position, cameraFollow.position + offset) < 0.001f)
+                transform.position = Vector3.MoveTowards(transform.position, cameraFollow.position + lookRot * offset, step);
+                if (Vector3.Distance(transform.position, cameraFollow.position + lookRot * offset) < 0.001f)
                 {
                     // Swap the position of the cylinder.
                     isMovingTowards = false;
