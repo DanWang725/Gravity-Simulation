@@ -30,12 +30,12 @@ namespace DanWang725.Planets
 		Vector3 calculateOrbitalSpeed(GameObject pos1, decimal planetMass){
 
 			float distance = Vector3.Distance(pos1.transform.position,transform.position);
-			distance = distance * 10000;
+			distance = distance * 100000;
 
 			float G = 6.67f*Mathf.Pow(10,-11);
 
 			float speed = Mathf.Sqrt((G*(float)planetMass)/distance);
-			speed = speed/10000;
+			speed = speed/100000;
 			return new Vector3(speed,0f,0f);
 		}
 
@@ -44,8 +44,8 @@ namespace DanWang725.Planets
 		void getGPE(float distance, decimal planetMass){
 			//tempGravEnergy = (float)((G*planetMass*Planet.Mass)/(decimal)distance); never use this!!
 
-			curVelMag = thisPlanet.Velocity.getVector().magnitude*10000;
-			curAccelMag = thisPlanet.Acceleration.getVector().magnitude*10000;
+			curVelMag = thisPlanet.Velocity.getVector().magnitude*100000;
+			curAccelMag = thisPlanet.Acceleration.getVector().magnitude*100000;
 			centrifugalForce = ((curVelMag*curVelMag)/distanceFromPlanet)*(float)thisPlanet.Mass;
 		}
 
@@ -55,7 +55,7 @@ namespace DanWang725.Planets
 			float distance = Vector3.Distance(hugePlanetPos.transform.position, thisPlanet.Position.getVector());
 
 			//adjusting distance to be the correct units - in the simulation 1 unit is 10km, 10000m
-			distance = distance * 10000;
+			distance = distance * 100000;
 			distanceFromPlanet = (float)distance;
 
 			getGPE(distance, planetMass); //only calculates stats for viewing
@@ -63,7 +63,7 @@ namespace DanWang725.Planets
 			float distanceSquared = distance * distance;
 
 			//run time debug variables
-			decimal force = (Constants.Physics.G*(decimal)planetMass*thisPlanet.Mass/(decimal)distanceSquared)/10000;
+			decimal force = (Constants.Physics.G*(decimal)planetMass*thisPlanet.Mass/(decimal)distanceSquared)/100000;
 			calculatedForce = (float)force*10000;
 			return force;
 
@@ -78,7 +78,7 @@ namespace DanWang725.Planets
 		void calculateForce(LargeCoords forceGrav, GameObject pos1, decimal planetMass){
 			decimal pureForce = calculatePureForce(pos1, planetMass);
 			Vector3 forceHeading = calculateHeading(pos1);
-			linePlanet.SetPosition(1, forceHeading * ((float)pureForce * 100));
+			linePlanet.SetPosition(1, forceHeading * ((float)pureForce * 1000));
 			forceGrav.setVal((float)pureForce * forceHeading);
 		}
 
@@ -87,7 +87,7 @@ namespace DanWang725.Planets
 			thisPlanet.OldPos = thisPlanet.Position;
 			thisPlanet.Position = thisPlanet.OldPos + thisPlanet.Velocity * time + thisPlanet.Acceleration*time*time;
 			thisPlanet.Velocity = (thisPlanet.Position - thisPlanet.OldPos)/time;
-			lineVel.SetPosition(1, thisPlanet.Velocity.getVector()*100);
+			lineVel.SetPosition(1, thisPlanet.Velocity.getVector()*1000);
 		}
 
 		public void setTangental(){
