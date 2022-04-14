@@ -1,3 +1,4 @@
+using DanWang725.Core;
 using UnityEngine;
 
 //this controls the lesser (smaller planets)
@@ -49,39 +50,6 @@ namespace DanWang725.Planets
 			centrifugalForce = ((curVelMag*curVelMag)/distanceFromPlanet)*(float)thisPlanet.Mass;
 		}
 
-		//calculates the force without a vector (just force)
-		decimal calculatePureForce(GameObject hugePlanetPos, decimal planetMass){
-			//getting the distance between the object and the planet
-			float distance = Vector3.Distance(hugePlanetPos.transform.position, thisPlanet.Position.getVector());
-
-			//adjusting distance to be the correct units - in the simulation 1 unit is 10km, 10000m
-			distance = distance * 100000;
-			distanceFromPlanet = (float)distance;
-
-			getGPE(distance, planetMass); //only calculates stats for viewing
-
-			float distanceSquared = distance * distance;
-
-			//run time debug variables
-			decimal force = (Constants.Physics.G*(decimal)planetMass*thisPlanet.Mass/(decimal)distanceSquared)/100000;
-			calculatedForce = (float)force*10000;
-			return force;
-
-		}
-		//calculates the heading of the force
-		public Vector3 calculateHeading(GameObject hugePlanetPos){
-			Vector3 heading = (hugePlanetPos.transform.position - thisPlanet.Position.getVector());//larger mass (huge planet tag) goes first
-			return (heading/heading.magnitude);
-		}
-
-		//puts the force value and heading together into an array;
-		void calculateForce(LargeCoords forceGrav, GameObject pos1, decimal planetMass){
-			decimal pureForce = calculatePureForce(pos1, planetMass);
-			Vector3 forceHeading = calculateHeading(pos1);
-			linePlanet.SetPosition(1, forceHeading * ((float)pureForce * 1000));
-			forceGrav.setVal((float)pureForce * forceHeading);
-		}
-
 		//update the position in the Planet struct, not visual game object.
 		void updatePos(decimal time){
 			thisPlanet.OldPos = thisPlanet.Position;
@@ -104,6 +72,7 @@ namespace DanWang725.Planets
 			EventManager.OnChange += simChange;
 			
 			//setting the initial values of the planet
+			thisPlanet.Mass = 34;
 			thisPlanet.Velocity.setVal(initVelocity);
 			thisPlanet.OldPos.setVal(transform.position);
 			thisPlanet.Position.setVal(transform.position);
@@ -120,15 +89,13 @@ namespace DanWang725.Planets
 			decimal time = (decimal)simTime;
 		
 			LargeCoords fNet = new LargeCoords(0,0,0);
-			LargeCoords forceGrav = new LargeCoords(0,0,0);
 
 			//going through each planet with high mass and adding the gravitational force
 			foreach (GameObject planet in hugePlanets)
 			{
-				HugePlanetController pl = planet.GetComponent<HugePlanetController>();
-				calculateForce(forceGrav, planet, pl.objectMass);	//output is sent to forceGrav
-
-				fNet += forceGrav; //adding results to fNet
+				Planet pl = planet.GetComponent<HugePlanetController>().thisPlanet;
+				//calculateForce(forceGrav, planet, pl.objectMass);	//output is sent to forceGrav
+				fNet += MathPhysicsFormulas.CalculateGravitationalForceLargeCoord(pl, thisPlanet);; //adding results to fNet
 				//do stuff here
 			}
 

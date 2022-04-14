@@ -8,7 +8,7 @@ namespace DanWang725.Planets
     public class Planet : MonoBehaviour
     {
         [SerializeField]
-        decimal mass = 123;
+        decimal mass;
 
         LargeCoords _velocity = new LargeCoords();
         LargeCoords _acceleration = new LargeCoords();
