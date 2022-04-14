@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using DanWang725.Core;
 using UnityEngine;
 
@@ -11,7 +12,8 @@ namespace DanWang725.Planets
 
 		public Vector3 initVelocity = new Vector3(0f,0f,0f); //can be set in here or in editor
 
-		public LineRenderer linePlanet;
+		List<LineRenderer> linePlanets = new List<LineRenderer>();
+		public GameObject linePlanetTemplate;
 
 		public LineRenderer lineVel;
 		//most of these are just for the observation values
@@ -82,6 +84,15 @@ namespace DanWang725.Planets
 		// Update is called once per frame
 		void FixedUpdate()
 		{
+			while (linePlanets.Count != hugePlanets.Length)
+			{
+				GameObject tempLine = Instantiate(linePlanetTemplate, transform.position, transform.rotation);
+				tempLine.transform.parent = transform;
+				tempLine.SetActive(true);
+				linePlanets.Add(tempLine.GetComponent<LineRenderer>());
+			}
+
+			int lineIndex = 0;
 			if (!doSim){	//end here if sim is paused
 				return;
 			}
@@ -89,13 +100,16 @@ namespace DanWang725.Planets
 			decimal time = (decimal)simTime;
 		
 			LargeCoords fNet = new LargeCoords(0,0,0);
-
+			
 			//going through each planet with high mass and adding the gravitational force
 			foreach (GameObject planet in hugePlanets)
 			{
 				Planet pl = planet.GetComponent<HugePlanetController>().thisPlanet;
 				//calculateForce(forceGrav, planet, pl.objectMass);	//output is sent to forceGrav
-				fNet += MathPhysicsFormulas.CalculateGravitationalForceLargeCoord(pl, thisPlanet);; //adding results to fNet
+				LargeCoords tempForce = MathPhysicsFormulas.CalculateGravitationalForceLargeCoord(pl, thisPlanet);
+				linePlanets[lineIndex++].SetPosition(1,tempForce.getVector()*10000);
+				
+				fNet += tempForce; //adding results to fNet
 				//do stuff here
 			}
 
