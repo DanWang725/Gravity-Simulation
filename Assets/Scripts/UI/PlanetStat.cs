@@ -35,7 +35,7 @@ namespace DanWang725.UI
         public void followThis(newPlanetController s){
             Debug.Log(s);
             planetScript = s;
-            s.setTangental();
+            //s.setTangental();
             displayValue = true;
         }
     }

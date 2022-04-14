@@ -135,7 +135,6 @@ GameObject:
   - component: {fileID: 81676757}
   - component: {fileID: 81676756}
   - component: {fileID: 81676755}
-  - component: {fileID: 81676754}
   - component: {fileID: 81676753}
   - component: {fileID: 81676759}
   - component: {fileID: 81676760}
@@ -173,22 +172,6 @@ MonoBehaviour:
   planet1Mass: 6.37e+23
   planet2Mass: 120
   forceResult: {x: 0, y: 0, z: 0}
---- !u!54 &81676754
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 81676752}
-  serializedVersion: 2
-  m_Mass: 1e+9
-  m_Drag: 0
-  m_AngularDrag: 0.5
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 1
-  m_Constraints: 0
-  m_CollisionDetection: 3
 --- !u!135 &81676755
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2019,7 +2002,6 @@ GameObject:
   - component: {fileID: 1163973916}
   - component: {fileID: 1163973915}
   - component: {fileID: 1163973914}
-  - component: {fileID: 1163973913}
   - component: {fileID: 1163973912}
   - component: {fileID: 1163973911}
   - component: {fileID: 1163973910}
@@ -2182,22 +2164,6 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!54 &1163973913
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1163973908}
-  serializedVersion: 2
-  m_Mass: 0.0012
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 1
-  m_Constraints: 0
-  m_CollisionDetection: 3
 --- !u!65 &1163973914
 BoxCollider:
   m_ObjectHideFlags: 0
