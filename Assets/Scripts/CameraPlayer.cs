@@ -55,9 +55,9 @@ namespace DanWang725
             }
 
             //calculating the movement vectors based on movement keys
-            float xMovement = Input.GetAxis("Vertical")*movementSensitivity * (2 * ((Input.GetKey(KeyCode.LeftShift)) ? 2:1));
-            float yMovement = Input.GetAxis("Vertical Y")*movementSensitivity * (2 * ((Input.GetKey(KeyCode.LeftShift)) ? 2:1));
-            float zMovement = Input.GetAxis("Horizontal")*movementSensitivity * (2 * ((Input.GetKey(KeyCode.LeftShift)) ? 2:1));
+            float xMovement = Input.GetAxis("Vertical")*movementSensitivity * (2 * ((Input.GetKey(KeyCode.LeftShift)) ? 5:1));
+            float yMovement = Input.GetAxis("Vertical Y")*movementSensitivity * (2 * ((Input.GetKey(KeyCode.LeftShift)) ? 5:1));
+            float zMovement = Input.GetAxis("Horizontal")*movementSensitivity * (2 * ((Input.GetKey(KeyCode.LeftShift)) ? 5:1));
             transform.Translate(Vector3.forward * xMovement);
             transform.Translate(Vector3.up * yMovement);
             transform.Translate(Vector3.right * zMovement);

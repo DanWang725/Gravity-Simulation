@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Windows.WebCam;
 
 //handles the button event system
 
@@ -6,11 +7,12 @@ namespace DanWang725.Planets
 {
     public class EventManager : MonoBehaviour
     {
-        public delegate void PauseButton();
+        public delegate void ButtonEv();
 
         public delegate void SliderValue(float val);
-        public static event PauseButton OnPause;
+        public static event ButtonEv OnPause;
         public static event SliderValue OnChange;
+        public static event ButtonEv OnCreate;
     
         public void buttonPause()
         {
@@ -20,6 +22,11 @@ namespace DanWang725.Planets
         public void sliderChange(float val)
         {
             OnChange(val);
+        }
+
+        public void buttonCreate()
+        {
+            OnCreate();
         }
     }
 }
