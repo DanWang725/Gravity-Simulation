@@ -105,6 +105,11 @@ namespace DanWang725.Planets
 			foreach (GameObject planet in hugePlanets)
 			{
 				Planet pl = planet.GetComponent<HugePlanetController>().thisPlanet;
+				if (Vector3.Distance(thisPlanet.Position.getVector(), pl.Position.getVector()) < 63)
+				{
+					Destroy(gameObject);
+				}
+
 				//calculateForce(forceGrav, planet, pl.objectMass);	//output is sent to forceGrav
 				LargeCoords tempForce = MathPhysicsFormulas.CalculateGravitationalForceLargeCoord(pl, thisPlanet);
 				linePlanets[lineIndex++].SetPosition(1,tempForce.getVector()*10000);

@@ -11,7 +11,7 @@ namespace DanWang725
 
         public int circleRange = 100;
 
-        public float power = 0.001f;
+        public float power = 1000f;
         
         // Start is called before the first frame update
         void Start()
@@ -23,7 +23,7 @@ namespace DanWang725
         {
             GameObject temp = Instantiate(planetTemplate, Random.insideUnitSphere * circleRange, planetTemplate.transform.rotation);
             temp.SetActive(true);
-            temp.GetComponent<newPlanetController>().initVelocity = (Random.insideUnitSphere*power);
+            temp.GetComponent<newPlanetController>().initVelocity = (Random.insideUnitSphere/power);
         }
 
         // Update is called once per frame
