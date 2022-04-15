@@ -735,7 +735,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 691002485}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9997207
+  m_Size: 0.9999908
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1399,13 +1399,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 211020831}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 211020833}
+        m_TargetAssemblyTypeName: DanWang725.Planets.EventManager, Assembly-CSharp
+        m_MethodName: buttonFollow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1461,6 +1461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae71a5721ccab8947a960e748a067d24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _referencedObject: {fileID: 0}
   cameraScript: {fileID: 963194229}
 --- !u!1 &595096931
 GameObject:
@@ -1884,8 +1885,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 120, y: -49.6}
-  m_SizeDelta: {x: 200, y: 500}
+  m_AnchoredPosition: {x: 120, y: -121}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &829201950
 MonoBehaviour:
@@ -2325,6 +2326,7 @@ MonoBehaviour:
   maxYAngle: 80
   cameraFollow: {fileID: 2009091993}
   isFollowing: 0
+  isMovingTowards: 0
   debugLine: {fileID: 630963112}
   pCanvas: {fileID: 381164939}
 --- !u!114 &963194230
@@ -3445,7 +3447,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000057042027}
+  m_AnchoredPosition: {x: 0, y: 0.00036118677}
   m_SizeDelta: {x: 0, y: 80}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1621571930
