@@ -27,9 +27,21 @@ namespace DanWang725.Planets
 
 		private GameObject[] hugePlanets;
 
-		private float simTime = 1f;
-		private bool doSim = true;
-         
+		private float _simSpeed = 1f;
+		private bool _isPaused = true;
+
+		public float SimSpeed
+		{
+			get => _simSpeed;
+			set => _simSpeed = value;
+		}
+
+		public bool IsPaused
+		{
+			get => _isPaused;
+			set => _isPaused = value;
+		}
+
 		//start up function, calculates the binding speed to orbit the planet
 		Vector3 calculateOrbitalSpeed(GameObject pos1, decimal planetMass){
 
@@ -94,11 +106,11 @@ namespace DanWang725.Planets
 			}
 
 			int lineIndex = 0;
-			if (!doSim){	//end here if sim is paused
+			if (!_isPaused){	//end here if sim is paused
 				return;
 			}
 		
-			decimal time = (decimal)simTime;
+			decimal time = (decimal)_simSpeed;
 		
 			LargeCoords fNet = new LargeCoords(0,0,0);
 			
@@ -137,11 +149,11 @@ namespace DanWang725.Planets
 
 		}
 
-		void pauseSim() => doSim = !doSim;
+		void pauseSim() => _isPaused = !_isPaused;
 
 		void simChange(float val)
 		{
-			simTime = val;
+			_simSpeed = val;
 		}
 
 	}

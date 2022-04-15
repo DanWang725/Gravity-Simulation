@@ -20,7 +20,7 @@ namespace DanWang725
         private float movementSensitivity = 0.01f;
 
         public float maxYAngle = 80f;
-        private Vector2 currentRotation;
+        public Vector2 currentRotation;
         public Transform cameraFollow;
         public bool isFollowing = false;
         public bool isMovingTowards = false;
@@ -59,6 +59,8 @@ namespace DanWang725
                 lookRot = Quaternion.LookRotation(targetPos - transform.position, Vector3.up);
                 dist = Vector3.Distance(transform.position,targetPos);
                 display.followThis(target.gameObject.GetComponent<newPlanetController>());
+                currentRotation.x = transform.rotation.eulerAngles.x;
+                currentRotation.y = transform.rotation.eulerAngles.y;
             }
 
             
@@ -75,8 +77,8 @@ namespace DanWang725
         {
         
             //handling camera rotation when the right mouse button is held down
-            if(Input.GetButton("MoveCamera")){
-
+            if(Input.GetButton("MoveCamera"))
+            {
                 //doing the initial rotation based on mouse X and Y values
                 transform.Rotate(0, Input.GetAxis("Mouse X")*sensitivity,0);
                 transform.Rotate(-Input.GetAxis("Mouse Y")*sensitivity,0,0);
