@@ -30,7 +30,7 @@ namespace DanWang725.UI
             tempBttn.transform.SetParent(contentBox.transform);
             tempBttn.SetActive(true);
             
-            tempBttn.GetComponent<PlanetViewer>().ReferencedObject = tempBttn;
+            tempBttn.GetComponent<PlanetViewer>().ReferencedObject = planet;
             planetButtons.Add(tempBttn);
             RearrangeButtons();
             
@@ -40,7 +40,7 @@ namespace DanWang725.UI
         void Start()
         {
             contentBox = transform.gameObject.GetComponent<RectTransform>();
-            GameObject[] tempPlanets = GameObject.FindGameObjectsWithTag("HighMass");
+            GameObject[] tempPlanets = GameObject.FindGameObjectsWithTag("SmallerMass");
             foreach (var pl  in tempPlanets)
             {
                 CreateButtonForPlanet(pl);

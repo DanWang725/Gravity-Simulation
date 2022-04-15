@@ -23,7 +23,7 @@ namespace DanWang725
         private Vector2 currentRotation;
         public Transform cameraFollow;
         public bool isFollowing = false;
-        private bool isMovingTowards = false;
+        public bool isMovingTowards = false;
         private float dist;
         public GameObject debugLine;
 
@@ -40,13 +40,15 @@ namespace DanWang725
             }
             else
             {
-                var targetPos = transform.position;
-                cameraFollow = target.transform;
-                            
+                var targetPos = target.position;
+                Debug.Log("We want to move to " + targetPos + " We are at " + transform.position + " The vector between us is " + (targetPos - transform.position) +
+                          " and");
+                cameraFollow = target;
                 isFollowing = true;
                 isMovingTowards = true;
-                            
+                
                 transform.rotation = Quaternion.LookRotation(targetPos - transform.position, Vector3.up);
+                lookRot = Quaternion.LookRotation(targetPos - transform.position, Vector3.up);
                 dist = Vector3.Distance(transform.position,targetPos);
                 display.followThis(target.gameObject.GetComponent<newPlanetController>());
             }
@@ -108,7 +110,7 @@ namespace DanWang725
                         Debug.Log("You selected the " + hit.transform.name); // ensure you picked right object
                         FollowThis(hit.transform);
                         //if the camera is following a planet already, stop following
-                        if(isFollowing){
+                        /*if(isFollowing){
                             isFollowing = false;
                             isMovingTowards = false;
                             //pCanvas.SendMessage("disableTextDisplayPlanet");
@@ -116,13 +118,14 @@ namespace DanWang725
                         } else {    //if the camera is not following a planet currently, then start following it
                             FollowThis(hit.transform);
                             //pCanvas.SendMessage("followThis", hit.transform.gameObject.GetComponent<newPlanetController>());
-                        }
+                        }*/
                     
                     }
              
                 }
             }
 
+            
             //transition to following the planet
             if(isMovingTowards){
                 float step = dist * Time.deltaTime;

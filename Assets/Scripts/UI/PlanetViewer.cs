@@ -7,7 +7,7 @@ namespace DanWang725.UI
 {
     public class PlanetViewer : MonoBehaviour
     {
-        private GameObject _referencedObject;
+        public GameObject _referencedObject;
         public GameObject ReferencedObject { get => _referencedObject; set => _referencedObject = value; }
 
         public CameraPlayer cameraScript;
