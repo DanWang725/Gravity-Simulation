@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using DanWang725.Core;
+using DanWang725.UI;
 using UnityEngine;
 
 //this controls the lesser (smaller planets)
@@ -107,6 +108,7 @@ namespace DanWang725.Planets
 				Planet pl = planet.GetComponent<HugePlanetController>().thisPlanet;
 				if (Vector3.Distance(thisPlanet.Position.getVector(), pl.Position.getVector()) < 34)
 				{
+					GameObject.FindObjectOfType<PlanetScrollList>().RemoveButton(gameObject);
 					Destroy(gameObject);
 				}
 
