@@ -28,7 +28,32 @@ namespace DanWang725
         public GameObject debugLine;
 
         public GameObject pCanvas;
+        
+        public void FollowThis(Transform target)
+        {
+            if (isFollowing)
+            {
+                isFollowing = false;
+                isMovingTowards = false;
+                //pCanvas.SendMessage("disableTextDisplayPlanet");
+                display.disableTextDisplayPlanet();
+            }
+            else
+            {
+                var targetPos = transform.position;
+                cameraFollow = target.transform;
+                            
+                isFollowing = true;
+                isMovingTowards = true;
+                            
+                transform.rotation = Quaternion.LookRotation(targetPos - transform.position, Vector3.up);
+                dist = Vector3.Distance(transform.position,targetPos);
+                display.followThis(target.gameObject.GetComponent<newPlanetController>());
+            }
 
+            
+        }
+        
         void Start()
         {
             transform.position = player.transform.position +offset;
@@ -73,7 +98,7 @@ namespace DanWang725
                 if ( Physics.Raycast (ray,out hit)) {
 
                     //making sure it is the correct tag on the collided object
-                    if(hit.transform.tag == "SmallerMass"){
+                    if(hit.transform.CompareTag("SmallerMass")){
                         Vector3 direction = hit.point - ray.origin;
                         GameObject temp = Instantiate(debugLine, hit.point, Quaternion.LookRotation(direction, Vector3.up));
                         lookRot = Quaternion.LookRotation(direction, Vector3.up);
@@ -81,7 +106,7 @@ namespace DanWang725
                         cameraFollow = hit.transform;
                     
                         Debug.Log("You selected the " + hit.transform.name); // ensure you picked right object
-
+                        FollowThis(hit.transform);
                         //if the camera is following a planet already, stop following
                         if(isFollowing){
                             isFollowing = false;
@@ -89,14 +114,7 @@ namespace DanWang725
                             //pCanvas.SendMessage("disableTextDisplayPlanet");
                             display.disableTextDisplayPlanet();
                         } else {    //if the camera is not following a planet currently, then start following it
-                            isFollowing = true;
-                            isMovingTowards = true;
-                            dist = Vector3.Distance(transform.position,cameraFollow.position);
-                            
-                            transform.rotation = lookRot;
-                            
-                            oldPos = cameraFollow.position;
-                            display.followThis(hit.transform.gameObject.GetComponent<newPlanetController>());
+                            FollowThis(hit.transform);
                             //pCanvas.SendMessage("followThis", hit.transform.gameObject.GetComponent<newPlanetController>());
                         }
                     
@@ -127,4 +145,6 @@ namespace DanWang725
 
         }
     }
+    
+    
 }
