@@ -135,6 +135,12 @@ namespace DanWang725
 
             
             //transition to following the planet
+            
+            if (cameraFollow == null && isFollowing)
+            {
+                stopFollowing();
+            }
+            
             if(isMovingTowards){
                 float step = dist * Time.deltaTime;
                 transform.position = Vector3.MoveTowards(transform.position, cameraFollow.position + lookRot * offset, step);
@@ -147,7 +153,7 @@ namespace DanWang725
 
             //if the camera is supposed to be following the selected planet
             if(isFollowing){
-
+                
                 //moving the camera to the same coordinates it was in the previous position relative to the selected planet
                 transform.position += cameraFollow.position - oldPos;
                 oldPos = cameraFollow.position;
