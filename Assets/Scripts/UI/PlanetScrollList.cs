@@ -12,6 +12,27 @@ namespace DanWang725.UI
         public RectTransform scrollView;
         public RectTransform contentBox;
 
+        public void RemoveButton(GameObject pl)
+        {
+            Debug.Log("We were called to remove a button");
+            int index = -1;
+            foreach (var tempBttn in planetButtons)
+            {
+                index++;
+                if (pl.Equals(tempBttn.GetComponent<PlanetViewer>().ReferencedObject))
+                {
+                    break;
+                }
+            }
+            if (index != -1)
+            {
+                GameObject tempBttn = planetButtons[index];
+                planetButtons.RemoveAt(index);
+                Destroy(tempBttn);
+                RearrangeButtons();
+            }
+        }
+
         private void RearrangeButtons()
         {
             int newHeight = planetButtons.Count * 40;
@@ -33,7 +54,6 @@ namespace DanWang725.UI
             tempBttn.GetComponent<PlanetViewer>().ReferencedObject = planet;
             planetButtons.Add(tempBttn);
             RearrangeButtons();
-            
         }
 
         // Start is called before the first frame update

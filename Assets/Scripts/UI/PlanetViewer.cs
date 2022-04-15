@@ -19,6 +19,7 @@ namespace DanWang725.UI
 
         void FollowThis()
         {
+            Debug.Log("My position is " + gameObject.GetComponent<RectTransform>().anchoredPosition);
             cameraScript.FollowThis(_referencedObject.transform);
         }
 

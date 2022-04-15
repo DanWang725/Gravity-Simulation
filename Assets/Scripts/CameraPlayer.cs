@@ -28,7 +28,14 @@ namespace DanWang725
         public GameObject debugLine;
 
         public GameObject pCanvas;
-        
+
+        public void stopFollowing()
+        {
+            isFollowing = false;
+            isMovingTowards = false;
+            display.disableTextDisplayPlanet();
+        }
+
         public void FollowThis(Transform target)
         {
             if (isFollowing)
@@ -46,6 +53,7 @@ namespace DanWang725
                 cameraFollow = target;
                 isFollowing = true;
                 isMovingTowards = true;
+                oldPos = targetPos;
                 
                 transform.rotation = Quaternion.LookRotation(targetPos - transform.position, Vector3.up);
                 lookRot = Quaternion.LookRotation(targetPos - transform.position, Vector3.up);
