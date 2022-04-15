@@ -36,8 +36,8 @@ namespace DanWang725.UI
 
         private void RearrangeButtons()
         {
-            int newHeight = planetButtons.Count * 40;
-            int anchorY = -10;
+            int newHeight = planetButtons.Count * 40 + 20;
+            int anchorY = planetButtons.Count *-20 + 20;
             contentBox.sizeDelta = new Vector2(contentBox.sizeDelta.x,newHeight);
             foreach (var bttn in planetButtons)
             {

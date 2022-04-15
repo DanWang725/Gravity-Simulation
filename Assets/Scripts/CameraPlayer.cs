@@ -35,10 +35,10 @@ namespace DanWang725
             isMovingTowards = false;
             display.disableTextDisplayPlanet();
         }
-
+        
         public void FollowThis(Transform target)
         {
-            if (isFollowing)
+            if (cameraFollow != null && cameraFollow.Equals(target) && isFollowing)
             {
                 isFollowing = false;
                 isMovingTowards = false;
