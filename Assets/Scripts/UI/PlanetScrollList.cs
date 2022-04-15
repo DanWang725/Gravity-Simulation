@@ -30,6 +30,7 @@ namespace DanWang725.UI
                 planetButtons.RemoveAt(index);
                 Destroy(tempBttn);
                 RearrangeButtons();
+                
             }
         }
 

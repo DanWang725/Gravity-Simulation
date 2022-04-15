@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DanWang725.Planets;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace DanWang725.UI
 {
@@ -14,7 +15,7 @@ namespace DanWang725.UI
         // Start is called before the first frame update
         void Start()
         {
-            EventManager.OnFollow += FollowThis;
+            gameObject.GetComponent<Button>().onClick.AddListener(FollowThis);
         }
 
         void FollowThis()

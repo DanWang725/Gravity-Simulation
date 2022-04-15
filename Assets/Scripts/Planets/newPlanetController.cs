@@ -109,6 +109,7 @@ namespace DanWang725.Planets
 				if (Vector3.Distance(thisPlanet.Position.getVector(), pl.Position.getVector()) < 34)
 				{
 					GameObject.FindObjectOfType<PlanetScrollList>().RemoveButton(gameObject);
+					
 					Destroy(gameObject);
 				}
 
