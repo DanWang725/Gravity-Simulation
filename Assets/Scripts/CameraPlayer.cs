@@ -28,6 +28,15 @@ namespace DanWang725
         public GameObject debugLine;
 
         public GameObject pCanvas;
+        
+        private static float WrapAngle(float angle)
+        {
+            angle%=360;
+            if(angle >90)
+                return angle - 360;
+ 
+            return angle;
+        }
 
         public void stopFollowing()
         {
@@ -59,8 +68,9 @@ namespace DanWang725
                 lookRot = Quaternion.LookRotation(targetPos - transform.position, Vector3.up);
                 dist = Vector3.Distance(transform.position,targetPos);
                 display.followThis(target.gameObject.GetComponent<newPlanetController>());
-                currentRotation.x = transform.rotation.eulerAngles.x;
-                currentRotation.y = transform.rotation.eulerAngles.y;
+                Debug.Log("Angles that the program gets: " + transform.rotation.eulerAngles);
+                currentRotation.x = transform.rotation.eulerAngles.y;
+                currentRotation.y = WrapAngle(transform.rotation.eulerAngles.x);
             }
             
             
