@@ -10,7 +10,7 @@ namespace DanWang725
     {
         public GameObject planetTemplate;
         public PlanetScrollList planetButtonManager;
-
+        public int numToCreate;
         public int circleRange = 100;
         private bool _isPaused = true;
         private float _simSpeed = 1f;
@@ -33,13 +33,17 @@ namespace DanWang725
 
         private void createPlanet()
         {
-            GameObject temp = Instantiate(planetTemplate, Random.insideUnitSphere * circleRange, planetTemplate.transform.rotation);
-            planetButtonManager.CreateButtonForPlanet(temp);
-            temp.SetActive(true);
-            newPlanetController tempScript = temp.GetComponent<newPlanetController>();
-            tempScript.IsPaused = _isPaused;
-            tempScript.SimSpeed = _simSpeed;
-            tempScript.initVelocity = (Random.insideUnitSphere/power);
+            for (int i = 0; i < numToCreate; i++)
+            {
+                    GameObject temp = Instantiate(planetTemplate, Random.insideUnitSphere * circleRange, planetTemplate.transform.rotation);
+                    planetButtonManager.CreateButtonForPlanet(temp);
+                    temp.SetActive(true);
+                    newPlanetController tempScript = temp.GetComponent<newPlanetController>();
+                    tempScript.IsPaused = _isPaused;
+                    tempScript.SimSpeed = _simSpeed;
+                    tempScript.initVelocity = (Random.insideUnitSphere/power);
+            }
+            
             
         }
 

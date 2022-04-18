@@ -62,7 +62,7 @@ namespace DanWang725
                 currentRotation.x = transform.rotation.eulerAngles.x;
                 currentRotation.y = transform.rotation.eulerAngles.y;
             }
-
+            
             
         }
         
@@ -70,6 +70,7 @@ namespace DanWang725
         {
             transform.position = player.transform.position +offset;
             oldPos = cameraFollow.position;
+            
         }
 
         // Update is called once per frame
