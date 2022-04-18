@@ -1,7 +1,7 @@
 ## Gravity-Simulation
-Just a little fun project to test out gravity simulation
+Started out as a project for my physics class for a gravity simulation.
 
-As of right now you can't do anything during runtime except watch the simulation run. All of the variables are set in the unity editor.
+Right now simulates the obit of objects around 1 or more planets (currently mass of mars). Create as many objects as you like to orbit these planets. Will display the force and velocity vectors of each object as well.
 
 # Current To-do list
 - [ ] Allow users to create planets and set their own properties
@@ -21,4 +21,4 @@ Todo:
 - [x] Re-organize code and functions
 - [x] Add ui list of current planets
 - [x] Add toggles for displaying vectors
-- [ ] Create planets with random positions and velocities
+- [x] Create planets with random positions and velocities
