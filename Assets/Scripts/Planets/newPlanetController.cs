@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using DanWang725.Core;
+using DanWang725.UI;
 using UnityEngine;
 
 //this controls the lesser (smaller planets)
@@ -10,7 +13,8 @@ namespace DanWang725.Planets
 
 		public Vector3 initVelocity = new Vector3(0f,0f,0f); //can be set in here or in editor
 
-		public LineRenderer linePlanet;
+		List<LineRenderer> linePlanets = new List<LineRenderer>();
+		public GameObject linePlanetTemplate;
 
 		public LineRenderer lineVel;
 		//most of these are just for the observation values
@@ -23,19 +27,31 @@ namespace DanWang725.Planets
 
 		private GameObject[] hugePlanets;
 
-		private float simTime = 1f;
-		private bool doSim = true;
-         
+		private float _simSpeed = 1f;
+		private bool _isPaused = true;
+
+		public float SimSpeed
+		{
+			get => _simSpeed;
+			set => _simSpeed = value;
+		}
+
+		public bool IsPaused
+		{
+			get => _isPaused;
+			set => _isPaused = value;
+		}
+
 		//start up function, calculates the binding speed to orbit the planet
 		Vector3 calculateOrbitalSpeed(GameObject pos1, decimal planetMass){
 
 			float distance = Vector3.Distance(pos1.transform.position,transform.position);
-			distance = distance * 10000;
+			distance = distance * 100000;
 
 			float G = 6.67f*Mathf.Pow(10,-11);
 
 			float speed = Mathf.Sqrt((G*(float)planetMass)/distance);
-			speed = speed/10000;
+			speed = speed/100000;
 			return new Vector3(speed,0f,0f);
 		}
 
@@ -44,42 +60,9 @@ namespace DanWang725.Planets
 		void getGPE(float distance, decimal planetMass){
 			//tempGravEnergy = (float)((G*planetMass*Planet.Mass)/(decimal)distance); never use this!!
 
-			curVelMag = thisPlanet.Velocity.getVector().magnitude*10000;
-			curAccelMag = thisPlanet.Acceleration.getVector().magnitude*10000;
+			curVelMag = thisPlanet.Velocity.getVector().magnitude*100000;
+			curAccelMag = thisPlanet.Acceleration.getVector().magnitude*100000;
 			centrifugalForce = ((curVelMag*curVelMag)/distanceFromPlanet)*(float)thisPlanet.Mass;
-		}
-
-		//calculates the force without a vector (just force)
-		decimal calculatePureForce(GameObject hugePlanetPos, decimal planetMass){
-			//getting the distance between the object and the planet
-			float distance = Vector3.Distance(hugePlanetPos.transform.position, thisPlanet.Position.getVector());
-
-			//adjusting distance to be the correct units - in the simulation 1 unit is 10km, 10000m
-			distance = distance * 10000;
-			distanceFromPlanet = (float)distance;
-
-			getGPE(distance, planetMass); //only calculates stats for viewing
-
-			float distanceSquared = distance * distance;
-
-			//run time debug variables
-			decimal force = (Constants.Physics.G*(decimal)planetMass*thisPlanet.Mass/(decimal)distanceSquared)/10000;
-			calculatedForce = (float)force*10000;
-			return force;
-
-		}
-		//calculates the heading of the force
-		public Vector3 calculateHeading(GameObject hugePlanetPos){
-			Vector3 heading = (hugePlanetPos.transform.position - thisPlanet.Position.getVector());//larger mass (huge planet tag) goes first
-			return (heading/heading.magnitude);
-		}
-
-		//puts the force value and heading together into an array;
-		void calculateForce(LargeCoords forceGrav, GameObject pos1, decimal planetMass){
-			decimal pureForce = calculatePureForce(pos1, planetMass);
-			Vector3 forceHeading = calculateHeading(pos1);
-			linePlanet.SetPosition(1, forceHeading * ((float)pureForce * 100));
-			forceGrav.setVal((float)pureForce * forceHeading);
 		}
 
 		//update the position in the Planet struct, not visual game object.
@@ -87,7 +70,7 @@ namespace DanWang725.Planets
 			thisPlanet.OldPos = thisPlanet.Position;
 			thisPlanet.Position = thisPlanet.OldPos + thisPlanet.Velocity * time + thisPlanet.Acceleration*time*time;
 			thisPlanet.Velocity = (thisPlanet.Position - thisPlanet.OldPos)/time;
-			lineVel.SetPosition(1, thisPlanet.Velocity.getVector()*100);
+			lineVel.SetPosition(1, thisPlanet.Velocity.getVector()*1000);
 		}
 
 		public void setTangental(){
@@ -104,6 +87,7 @@ namespace DanWang725.Planets
 			EventManager.OnChange += simChange;
 			
 			//setting the initial values of the planet
+			thisPlanet.Mass = 34;
 			thisPlanet.Velocity.setVal(initVelocity);
 			thisPlanet.OldPos.setVal(transform.position);
 			thisPlanet.Position.setVal(transform.position);
@@ -113,22 +97,39 @@ namespace DanWang725.Planets
 		// Update is called once per frame
 		void FixedUpdate()
 		{
-			if (!doSim){	//end here if sim is paused
+			while (linePlanets.Count != hugePlanets.Length)
+			{
+				GameObject tempLine = Instantiate(linePlanetTemplate, transform.position, transform.rotation);
+				tempLine.transform.parent = transform;
+				tempLine.SetActive(true);
+				linePlanets.Add(tempLine.GetComponent<LineRenderer>());
+			}
+
+			int lineIndex = 0;
+			if (!_isPaused){	//end here if sim is paused
 				return;
 			}
 		
-			decimal time = (decimal)simTime;
+			decimal time = (decimal)_simSpeed;
 		
 			LargeCoords fNet = new LargeCoords(0,0,0);
-			LargeCoords forceGrav = new LargeCoords(0,0,0);
-
+			
 			//going through each planet with high mass and adding the gravitational force
 			foreach (GameObject planet in hugePlanets)
 			{
-				HugePlanetController pl = planet.GetComponent<HugePlanetController>();
-				calculateForce(forceGrav, planet, pl.objectMass);	//output is sent to forceGrav
+				Planet pl = planet.GetComponent<HugePlanetController>().thisPlanet;
+				if (Vector3.Distance(thisPlanet.Position.getVector(), pl.Position.getVector()) < 34)
+				{
+					GameObject.FindObjectOfType<PlanetScrollList>().RemoveButton(gameObject);
+					
+					Destroy(gameObject);
+				}
 
-				fNet += forceGrav; //adding results to fNet
+				//calculateForce(forceGrav, planet, pl.objectMass);	//output is sent to forceGrav
+				LargeCoords tempForce = MathPhysicsFormulas.CalculateGravitationalForceLargeCoord(pl, thisPlanet);
+				linePlanets[lineIndex++].SetPosition(1,tempForce.getVector()*10000);
+				
+				fNet += tempForce; //adding results to fNet
 				//do stuff here
 			}
 
@@ -148,11 +149,11 @@ namespace DanWang725.Planets
 
 		}
 
-		void pauseSim() => doSim = !doSim;
+		void pauseSim() => _isPaused = !_isPaused;
 
 		void simChange(float val)
 		{
-			simTime = val;
+			_simSpeed = val;
 		}
 
 	}

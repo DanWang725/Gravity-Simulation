@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DanWang725
+namespace DanWang725.UI
 {
     public class sliderStat : MonoBehaviour
     {
