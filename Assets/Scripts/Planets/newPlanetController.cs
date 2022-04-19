@@ -41,6 +41,8 @@ namespace DanWang725.Planets
 			get => _isPaused;
 			set => _isPaused = value;
 		}
+		
+		
 
 		//start up function, calculates the binding speed to orbit the planet
 		Vector3 calculateOrbitalSpeed(GameObject pos1, decimal planetMass){

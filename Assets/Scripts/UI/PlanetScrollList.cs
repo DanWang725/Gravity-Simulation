@@ -67,7 +67,7 @@ namespace DanWang725.UI
             foreach (var tempBttn in planetButtons)
             {
                 index++;
-                if (pl.Equals(tempBttn.GetComponent<PlanetViewer>().ReferencedObject))
+                if (pl == tempBttn.GetComponent<PlanetViewer>().ReferencedObject)
                 {
                     break;
                 }
