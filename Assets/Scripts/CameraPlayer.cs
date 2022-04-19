@@ -1,5 +1,6 @@
 using DanWang725.Planets;
 using DanWang725.UI;
+using Ogxd;
 using UnityEngine;
 
 /*camera movement was used from this post in the unity forums: https://answers.unity.com/questions/1344322/free-mouse-rotating-camera.html
@@ -10,6 +11,8 @@ namespace DanWang725
     public class CameraPlayer : MonoBehaviour
     {
         public PlanetStat display;
+
+        public ZoomOverTime plane;
         // Start is called before the first frame update
         public GameObject player;
         private Vector3 offset = new Vector3(0,0,-7);
@@ -56,6 +59,8 @@ namespace DanWang725
             }
             else
             {
+                cameraFollow.GetComponent<Outline>().enabled = false;
+                
                 var targetPos = target.position;
                 Debug.Log("We want to move to " + targetPos + " We are at " + transform.position + " The vector between us is " + (targetPos - transform.position) +
                           " and");
@@ -63,6 +68,7 @@ namespace DanWang725
                 isFollowing = true;
                 isMovingTowards = true;
                 oldPos = targetPos;
+                cameraFollow.GetComponent<Outline>().enabled = true;
                 
                 transform.rotation = Quaternion.LookRotation(targetPos - transform.position, Vector3.up);
                 lookRot = Quaternion.LookRotation(targetPos - transform.position, Vector3.up);
@@ -109,6 +115,7 @@ namespace DanWang725
             transform.Translate(Vector3.forward * xMovement);
             transform.Translate(Vector3.up * yMovement);
             transform.Translate(Vector3.right * zMovement);
+            plane.speedFactor = -0.01f * Input.GetAxis("Vertical Y");
             //transform.position = transform.position + new Vector3(zMovement,yMovement,xMovement);
 
             //raycast for planet selection
