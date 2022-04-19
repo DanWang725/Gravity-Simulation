@@ -6,9 +6,12 @@ Right now simulates the obit of objects around 1 or more planets (currently mass
 # Current To-do list
 - [ ] Allow users to create planets and set their own properties
 - [ ] Creation of the large planets that influence orbiting planets
-- [ ] Fix camera bug with spectating objects not updating the stored rotation
+- [x] Fix camera bug with spectating objects not updating the stored rotation
 - [ ] Add a predicted path line for each orbiting object
 - [ ] Add textures to all planets
+- [ ] Add a start menu
+- [ ] Add a pause menu
+- [ ] Be able to exit the program within runtime
 
 # Previous Beta Branch
 
